@@ -27,8 +27,8 @@ class Client
     {
         $method = $this->methodProvider->fetchMethod($methodName);
 
-        $request = $method->createRequest($payload);
+        $task = $method->createTask($payload);
 
-        return $this->delivery->send($url, $request);
+        return $this->delivery->send($url, $task);
     }
 }

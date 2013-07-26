@@ -7,7 +7,7 @@ class DomainRenewTest extends TestCase
     /**
      * @test
      */
-    public function itShouldGenerateTheRequest()
+    public function itShouldGenerateTheTask()
     {
         $domainName = 'some-domain.org';
         $payableDate = '2012-12-24';
@@ -33,7 +33,7 @@ class DomainRenewTest extends TestCase
             )
         );
 
-        $request = $method->createRequest($requestData);
+        $request = $method->createTask($requestData);
 
         $this->assertEquals($expectedRequest, $request);
     }

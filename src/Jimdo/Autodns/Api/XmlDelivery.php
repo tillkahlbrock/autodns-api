@@ -3,46 +3,73 @@
 namespace Jimdo\Autodns\Api;
 
 use Jimdo\Autodns\Api\Account\Info;
+use Jimdo\Tool\ArrayToXmlConverter;
+use Jimdo\Tool\XmlToArrayConverter;
+use Buzz\Browser;
+use Buzz\Message\MessageInterface;
 
 class XmlDelivery
 {
-    private $xmlWriter;
-
-    private $sender;
+    /**
+     * @var \Jimdo\Tool\ArrayToXmlConverter
+     */
+    private $arrayXmlConverter;
 
     /**
-     * @var Account\Info
+     * @var \Jimdo\Autodns\Api\Account\Info
      */
     private $accountInfo;
 
     /**
-     * @param string $url
-     * @param array $request
-     * @return \Buzz\Message\MessageInterface
+     * @var \Buzz\Browser
      */
-    public function send($url, array $request)
+    private $sender;
+
+    /**
+     * @var \Jimdo\Tool\XmlToArrayConverter
+     */
+    private $xmlToArrayConverter;
+
+    public function __construct(
+        ArrayToXmlConverter $arrayXmlConverter,
+        Info $accountInfo,
+        Browser $sender,
+        XmlToArrayConverter $xmlToArrayConverter
+    )
     {
-        $this->xmlWriter = new \XMLWriter();
-        $this->xmlWriter->openMemory();
-        $xml = $this->convertToXml($request);
-
-        $this->sender = new \Buzz\Browser(new \Buzz\Client\Curl());
-
-        $response = $this->sender->call($url, \Buzz\Message\RequestInterface::METHOD_POST, array(), $xml);
-
-        $responseRepresentation = $this->createResponseRepresentation($response);
+        $this->arrayXmlConverter = $arrayXmlConverter;
+        $this->accountInfo = $accountInfo;
+        $this->sender = $sender;
+        $this->xmlToArrayConverter = $xmlToArrayConverter;
     }
 
-    private function convertToXml($request)
+    /**
+     * @param string $url
+     * @param array $task
+     * @return string
+     */
+    public function send($url, array $task)
     {
-        $username = $this->accountInfo->getUsername();
-        $password = $this->accountInfo->getPassword();
-        $context = $this->accountInfo->getContext();
-        return '';
+        $request = $this->buildRequest($task);
+
+        $xml = $this->arrayXmlConverter->convert($request);
+
+        $response = $this->sender->post($url, array(), $xml);
+
+        return $this->xmlToArrayConverter->convert($response->getContent());
     }
 
-    private function createResponseRepresentation(\Buzz\Message\MessageInterface $response)
+    private function buildRequest($task)
     {
-        return array();
+        return array(
+            'request' => array(
+                'auth' => array(
+                    'user' => $this->accountInfo->getUsername(),
+                    'password' => $this->accountInfo->getPassword(),
+                    'context' => $this->accountInfo->getContext()
+                ),
+                'task' => $task
+            ),
+        );
     }
 }

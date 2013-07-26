@@ -9,6 +9,7 @@
     "autoload": {
         "psr-0": {
             "Jimdo\\Autodns": "src",
+            "Jimdo\\Tool": "src",
             "": "test"
         }
     }

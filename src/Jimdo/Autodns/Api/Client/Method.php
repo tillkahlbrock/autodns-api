@@ -6,5 +6,5 @@ interface Method
 {
     const DOMAIN_RENEW = 'method.domain.renew';
 
-    public function createRequest(array $requestData);
+    public function createTask(array $requestData);
 }

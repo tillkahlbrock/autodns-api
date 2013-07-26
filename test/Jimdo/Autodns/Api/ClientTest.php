@@ -54,7 +54,7 @@ class ClientTest extends TestCase
         $method = $this->aMethod()->build();
         $method
             ->expects($this->once())
-            ->method('createRequest')
+            ->method('createTask')
             ->with($payload);
 
         $this->methodProvider->with('fetchMethod', $method);
@@ -70,7 +70,7 @@ class ClientTest extends TestCase
         $request = $this->someRequest();
         $url = self::SOME_URL;
 
-        $method = $this->aMethod()->with('createRequest', $request);
+        $method = $this->aMethod()->with('createTask', $request);
         $this->methodProvider->with('fetchMethod', $method);
 
         $this->buildClient()->call(self::SOME_METHOD_NAME, $url, $this->somePayload());
@@ -112,7 +112,7 @@ class ClientTest extends TestCase
      */
     private function aMethod()
     {
-        return $this->aStub('Jimdo\Autodns\Api\Client\Method')->with('createRequest', array());
+        return $this->aStub('Jimdo\Autodns\Api\Client\Method')->with('createTask', array());
     }
 
     private function someRequest()

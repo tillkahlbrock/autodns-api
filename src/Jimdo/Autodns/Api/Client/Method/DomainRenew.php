@@ -6,7 +6,7 @@ use Jimdo\Autodns\Api\Client\Method;
 
 class DomainRenew implements Method
 {
-    public function createRequest(array $requestData)
+    public function createTask(array $requestData)
     {
         return array(
             'code'   => '0101003',
