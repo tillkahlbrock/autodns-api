@@ -10,10 +10,8 @@ class ClientIntegrationTest extends TestCase
      */
     public function itShouldWork()
     {
-        $this->markTestSkipped();
-
         $xml = <<<XML
-<?xml version="1.0"encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <response>
     <result>
         <msg>
@@ -36,20 +34,22 @@ class ClientIntegrationTest extends TestCase
 XML;
 
         $expectedResult = array(
-            'msg' => array(
-                'code' => 'MSG01046',
-                'status' => 'success',
-                'text' => 'Der bestehende Kuendigungsauftrag wurde storniert.',
-                'type' => 'notice'
-            ),
-            'status' => array(
-                'code' => 'N0101003',
-                'object' => array(
-                    'type' => 'domain',
-                    'value' => 'example1695.com'
+            'result' => array(
+                'msg' => array(
+                    'code' => 'MSG01046',
+                    'status' => 'success',
+                    'text' => 'Der bestehende Kuendigungsauftrag wurde storniert.',
+                    'type' => 'notice'
                 ),
-                'text' => 'Die Laufzeitverlaengerung wurde gestartet.',
-                'type' => 'notify'
+                'status' => array(
+                    'code' => 'N0101003',
+                    'object' => array(
+                        'type' => 'domain',
+                        'value' => 'example1695.com'
+                    ),
+                    'text' => 'Die Laufzeitverlaengerung wurde gestartet.',
+                    'type' => 'notify'
+                )
             )
         );
 
