@@ -1,0 +1,15 @@
+{
+    "require": {
+        "kriswallsmith/buzz": "dev-master",
+        "schnipseljagd/testdatabuilder": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Jimdo\\Autodns": "src",
+            "": "test"
+        }
+    }
+}
