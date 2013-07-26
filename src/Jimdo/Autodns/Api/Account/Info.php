@@ -3,11 +3,20 @@
 namespace Jimdo\Autodns\Api\Account;
 
 
-interface Info 
+class Info
 {
-    public function getContext();
+    public function getContext()
+    {
+        return '';
+    }
 
-    public function getPassword();
+    public function getPassword()
+    {
+        return '';
+    }
 
-    public function getUsername();
+    public function getUsername()
+    {
+        return '';
+    }
 }

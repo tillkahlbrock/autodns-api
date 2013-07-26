@@ -62,14 +62,12 @@ class XmlDelivery
     private function buildRequest($task)
     {
         return array(
-            'request' => array(
-                'auth' => array(
-                    'user' => $this->accountInfo->getUsername(),
-                    'password' => $this->accountInfo->getPassword(),
-                    'context' => $this->accountInfo->getContext()
-                ),
-                'task' => $task
+            'auth' => array(
+                'user' => $this->accountInfo->getUsername(),
+                'password' => $this->accountInfo->getPassword(),
+                'context' => $this->accountInfo->getContext()
             ),
+            'task' => $task
         );
     }
 }

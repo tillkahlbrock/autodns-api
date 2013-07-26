@@ -3,11 +3,14 @@
 namespace Jimdo\Tool;
 
 
-interface XmlToArrayConverter 
+class XmlToArrayConverter
 {
     /**
      * @param string $xml
      * @return array
      */
-    public function convert($xml);
+    public function convert($xml)
+    {
+        return array();
+    }
 }
