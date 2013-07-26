@@ -6,11 +6,13 @@ namespace Jimdo\Tool;
 class XmlToArrayConverter
 {
     /**
-     * @param string $xml
+     * @param string $xmlString
      * @return array
      */
-    public function convert($xml)
+    public function convert($xmlString)
     {
-        return array();
+        $xml = simplexml_load_string($xmlString);
+        $json = json_encode($xml);
+        return json_decode($json, true);
     }
 }
