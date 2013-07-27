@@ -59,7 +59,7 @@ XML;
             new Client\Method\Provider(),
             new \Jimdo\Autodns\Api\XmlDelivery(
                 new \Jimdo\Tool\ArrayToXmlConverter(),
-                new Jimdo\Autodns\Api\Account\Info(),
+                new Jimdo\Autodns\Api\Account\Info('some_user', 'superPassword', 2),
                 $sender,
                 new \Jimdo\Tool\XmlToArrayConverter()
             )
