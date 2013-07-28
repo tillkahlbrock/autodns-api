@@ -1,9 +1,9 @@
 <?php
 
-namespace Jimdo\Autodns\Api\Client\Method;
+namespace Autodns\Api\Client\Method;
 
-use Jimdo\Autodns\Api\Client\Method;
-use Jimdo\Autodns\Api\Exception\MethodNameDoesNotExist;
+use Autodns\Api\Client\Method;
+use Autodns\Api\Exception\MethodNameDoesNotExist;
 
 class Provider
 {
@@ -12,14 +12,14 @@ class Provider
     public function __construct()
     {
         $this->methodMapping = array(
-            Method::DOMAIN_RENEW => 'Jimdo\Autodns\Api\Client\Method\DomainRenew'
+            Method::DOMAIN_RENEW => 'Autodns\Api\Client\Method\DomainRenew'
         );
     }
 
     /**
      * @param string $methodName
-     * @throws \Jimdo\Autodns\Api\Exception\MethodNameDoesNotExist
-     * @return \Jimdo\Autodns\Api\Client\Method
+     * @throws \Autodns\Api\Exception\MethodNameDoesNotExist
+     * @return \Autodns\Api\Client\Method
      */
     public function fetchMethod($methodName)
     {

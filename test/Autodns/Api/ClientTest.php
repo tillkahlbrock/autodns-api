@@ -1,7 +1,7 @@
 <?php
 
-use Jimdo\Autodns\Api\Client\Method\Provider;
-use Jimdo\Autodns\Api\XmlDelivery;
+use Autodns\Api\Client\Method\Provider;
+use Autodns\Api\XmlDelivery;
 
 class ClientTest extends TestCase
 {
@@ -23,9 +23,9 @@ class ClientTest extends TestCase
     {
         parent::setUp();
 
-        $this->methodProvider = $this->aStub('Jimdo\Autodns\Api\Client\Method\Provider')
+        $this->methodProvider = $this->aStub('Autodns\Api\Client\Method\Provider')
             ->with('fetchMethod', $this->aMethod());
-        $this->delivery = $this->aStub('Jimdo\Autodns\Api\XmlDelivery');
+        $this->delivery = $this->aStub('Autodns\Api\XmlDelivery');
     }
 
     /**
@@ -89,11 +89,11 @@ class ClientTest extends TestCase
     }
 
     /**
-     * @return \Jimdo\Autodns\Api\Client
+     * @return \Autodns\Api\Client
      */
     private function buildClient()
     {
-        return $this->anObject('\Jimdo\Autodns\Api\Client')
+        return $this->anObject('\Autodns\Api\Client')
             ->with(
                 array(
                     $this->methodProvider,
@@ -112,7 +112,7 @@ class ClientTest extends TestCase
      */
     private function aMethod()
     {
-        return $this->aStub('Jimdo\Autodns\Api\Client\Method')->with('createTask', array());
+        return $this->aStub('Autodns\Api\Client\Method')->with('createTask', array());
     }
 
     private function someRequest()

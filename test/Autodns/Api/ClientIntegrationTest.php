@@ -1,7 +1,7 @@
 <?php
 
-use Jimdo\Autodns\Api\Client;
-use Jimdo\Autodns\Api\Client\Method;
+use Autodns\Api\Client;
+use Autodns\Api\Client\Method;
 
 class ClientIntegrationTest extends TestCase
 {
@@ -57,11 +57,11 @@ XML;
         $sender = $this->aStub('Buzz\Browser')->with('post', $response)->build();
         $client = new Client(
             new Client\Method\Provider(),
-            new \Jimdo\Autodns\Api\XmlDelivery(
-                new \Jimdo\Tool\ArrayToXmlConverter(),
-                new Jimdo\Autodns\Api\Account\Info('some_user', 'superPassword', 2),
+            new \Autodns\Api\XmlDelivery(
+                new \Tool\ArrayToXmlConverter(),
+                new Autodns\Api\Account\Info('some_user', 'superPassword', 2),
                 $sender,
-                new \Jimdo\Tool\XmlToArrayConverter()
+                new \Tool\XmlToArrayConverter()
             )
         );
 

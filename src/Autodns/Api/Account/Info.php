@@ -1,6 +1,6 @@
 <?php
 
-namespace Jimdo\Autodns\Api\Account;
+namespace Autodns\Api\Account;
 
 
 class Info

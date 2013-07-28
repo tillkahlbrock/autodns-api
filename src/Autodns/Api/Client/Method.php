@@ -1,6 +1,6 @@
 <?php
 
-namespace Jimdo\Autodns\Api\Client;
+namespace Autodns\Api\Client;
 
 interface Method
 {

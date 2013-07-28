@@ -1,22 +1,22 @@
 <?php
 
-namespace Jimdo\Autodns\Api;
+namespace Autodns\Api;
 
-use Jimdo\Autodns\Api\Account\Info;
-use Jimdo\Tool\ArrayToXmlConverter;
-use Jimdo\Tool\XmlToArrayConverter;
+use Autodns\Api\Account\Info;
+use Tool\ArrayToXmlConverter;
+use Tool\XmlToArrayConverter;
 use Buzz\Browser;
 use Buzz\Message\MessageInterface;
 
 class XmlDelivery
 {
     /**
-     * @var \Jimdo\Tool\ArrayToXmlConverter
+     * @var \Tool\ArrayToXmlConverter
      */
     private $arrayXmlConverter;
 
     /**
-     * @var \Jimdo\Autodns\Api\Account\Info
+     * @var \Autodns\Api\Account\Info
      */
     private $accountInfo;
 
@@ -26,7 +26,7 @@ class XmlDelivery
     private $sender;
 
     /**
-     * @var \Jimdo\Tool\XmlToArrayConverter
+     * @var \Tool\XmlToArrayConverter
      */
     private $xmlToArrayConverter;
 

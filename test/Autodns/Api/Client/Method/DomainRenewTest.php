@@ -1,6 +1,6 @@
 <?php
 
-use Jimdo\Autodns\Api\Client\Method\DomainRenew;
+use Autodns\Api\Client\Method\DomainRenew;
 
 class DomainRenewTest extends TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Jimdo\Tool;
+namespace Tool;
 
 class ArrayToXmlConverter
 {

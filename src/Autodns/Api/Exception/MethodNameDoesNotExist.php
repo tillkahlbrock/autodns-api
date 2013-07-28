@@ -1,6 +1,6 @@
 <?php
 
-namespace Jimdo\Autodns\Api\Exception;
+namespace Autodns\Api\Exception;
 
 class MethodNameDoesNotExist extends \Exception
 {

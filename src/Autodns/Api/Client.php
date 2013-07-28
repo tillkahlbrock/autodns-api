@@ -1,9 +1,9 @@
 <?php
 
-namespace Jimdo\Autodns\Api;
+namespace Autodns\Api;
 
-use Jimdo\Autodns\Api\Client\Method\Provider;
-use Jimdo\Autodns\Api\XmlDelivery;
+use Autodns\Api\Client\Method\Provider;
+use Autodns\Api\XmlDelivery;
 
 class Client
 {

@@ -1,7 +1,7 @@
 <?php
 
-use Jimdo\Autodns\Api\Client\Method\Provider;
-use Jimdo\Autodns\Api\Client\Method;
+use Autodns\Api\Client\Method\Provider;
+use Autodns\Api\Client\Method;
 
 class ProviderTest extends TestCase
 {
@@ -14,7 +14,7 @@ class ProviderTest extends TestCase
 
         $method = $methodProvider->fetchMethod(Method::DOMAIN_RENEW);
 
-        $this->assertInstanceOf('Jimdo\Autodns\Api\Client\Method\DomainRenew', $method);
+        $this->assertInstanceOf('Autodns\Api\Client\Method\DomainRenew', $method);
     }
 
     /**
@@ -22,7 +22,7 @@ class ProviderTest extends TestCase
      */
     public function itShouldThrowAnExceptionIfTheGivenMethodNameDoesNotExist()
     {
-        $this->setExpectedException('Jimdo\Autodns\Api\Exception\MethodNameDoesNotExist');
+        $this->setExpectedException('Autodns\Api\Exception\MethodNameDoesNotExist');
 
         $methodProvider = new Provider();
 

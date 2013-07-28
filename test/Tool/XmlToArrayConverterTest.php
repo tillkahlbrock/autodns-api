@@ -44,7 +44,7 @@ XML;
             )
         );
 
-        $converter = new Jimdo\Tool\XmlToArrayConverter();
+        $converter = new Tool\XmlToArrayConverter();
 
         $this->assertEquals($expectedArray, $converter->convert($inputXml));
     }

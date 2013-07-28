@@ -9,12 +9,12 @@ class XmlDeliveryTest extends TestCase
     const SOME_XML = 'some xml';
 
     /**
-     * @var Jimdo\Tool\ArrayToXmlConverter | TestDataBuilder_StubBuilder | PHPUnit_Framework_MockObject_MockObject
+     * @var Tool\ArrayToXmlConverter | TestDataBuilder_StubBuilder | PHPUnit_Framework_MockObject_MockObject
      */
     private $arrayToXmlConverter;
 
     /**
-     * @var Jimdo\Autodns\Api\Account\Info | TestDataBuilder_StubBuilder | PHPUnit_Framework_MockObject_MockObject
+     * @var Autodns\Api\Account\Info | TestDataBuilder_StubBuilder | PHPUnit_Framework_MockObject_MockObject
      */
     private $accountInfo;
 
@@ -24,7 +24,7 @@ class XmlDeliveryTest extends TestCase
     private $sender;
 
     /**
-     * @var Jimdo\Tool\XmlToArrayConverter | TestDataBuilder_StubBuilder | PHPUnit_Framework_MockObject_MockObject
+     * @var Tool\XmlToArrayConverter | TestDataBuilder_StubBuilder | PHPUnit_Framework_MockObject_MockObject
      */
     private $xmlToArrayConverter;
 
@@ -32,10 +32,10 @@ class XmlDeliveryTest extends TestCase
     {
         parent::setUp();
 
-        $this->arrayToXmlConverter = $this->aStub('Jimdo\Tool\ArrayToXmlConverter');
-        $this->accountInfo = $this->aStub('Jimdo\Autodns\Api\Account\Info');
+        $this->arrayToXmlConverter = $this->aStub('Tool\ArrayToXmlConverter');
+        $this->accountInfo = $this->aStub('Autodns\Api\Account\Info');
         $this->sender = $this->aStub('Buzz\Browser')->with('post', $this->aResponse());
-        $this->xmlToArrayConverter = $this->aStub('Jimdo\Tool\XmlToArrayConverter');
+        $this->xmlToArrayConverter = $this->aStub('Tool\XmlToArrayConverter');
     }
 
     /**
@@ -102,11 +102,11 @@ class XmlDeliveryTest extends TestCase
     }
 
     /**
-     * @return Jimdo\Autodns\Api\XmlDelivery
+     * @return Autodns\Api\XmlDelivery
      */
     private function buildDelivery()
     {
-        return $this->anObject('Jimdo\Autodns\Api\XmlDelivery')
+        return $this->anObject('Autodns\Api\XmlDelivery')
             ->with(
                 array(
                     $this->arrayToXmlConverter,

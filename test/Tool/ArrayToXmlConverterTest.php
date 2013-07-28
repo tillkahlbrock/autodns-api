@@ -44,7 +44,7 @@ class ArrayToXmlConverterTest extends TestCase
 </request>
 XML;
 
-        $converter = new Jimdo\Tool\ArrayToXmlConverter();
+        $converter = new Tool\ArrayToXmlConverter();
 
         $this->assertEquals($this->removeWhiteSpaces($expectedXml), $this->removeWhiteSpaces($converter->convert($request)));
     }
