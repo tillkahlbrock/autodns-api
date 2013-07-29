@@ -101,6 +101,23 @@ class ClientTest extends TestCase
     /**
      * @test
      */
+    public function itShouldSendAuthInfo()
+    {
+        $authInfo = array('some' => 'auth');
+        $this->accountInfo->with('getAuthInfo', $authInfo);
+
+        $this->delivery = $this->delivery->build();
+        $this->delivery
+            ->expects($this->once())
+            ->method('send')
+            ->with($this->anything(), $authInfo, $this->anything());
+
+        $this->buildClient()->call(self::SOME_METHOD_NAME, self::SOME_URL, $this->somePayload());
+    }
+
+    /**
+     * @test
+     */
     public function itShouldSendTheTask()
     {
         $task = array('some' => 'task');
@@ -111,24 +128,7 @@ class ClientTest extends TestCase
         $this->delivery
             ->expects($this->once())
             ->method('send')
-            ->with($this->anything(), $task, $this->anything());
-
-        $this->buildClient()->call(self::SOME_METHOD_NAME, self::SOME_URL, $this->somePayload());
-    }
-
-    /**
-     * @test
-     */
-    public function itShouldSendAuthInfo()
-    {
-        $authInfo = array('some' => 'auth');
-        $this->accountInfo->with('getAuthInfo', $authInfo);
-
-        $this->delivery = $this->delivery->build();
-        $this->delivery
-            ->expects($this->once())
-            ->method('send')
-            ->with($this->anything(), $this->anything(), $authInfo);
+            ->with($this->anything(), $this->anything(), $task);
 
         $this->buildClient()->call(self::SOME_METHOD_NAME, self::SOME_URL, $this->somePayload());
     }

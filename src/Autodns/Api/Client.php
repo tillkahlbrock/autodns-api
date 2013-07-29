@@ -38,6 +38,6 @@ class Client
 
         $authInfo = $this->accountInfo->getAuthInfo();
 
-        return $this->delivery->send($url, $task, $authInfo);
+        return $this->delivery->send($url, $authInfo, $task);
     }
 }

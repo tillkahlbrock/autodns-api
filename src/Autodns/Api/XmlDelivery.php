@@ -38,11 +38,11 @@ class XmlDelivery
 
     /**
      * @param string $url
-     * @param array $task
      * @param array $authInfo
+     * @param array $task
      * @return string
      */
-    public function send($url, array $task, array $authInfo)
+    public function send($url, array $authInfo, array $task)
     {
         $request = $this->buildRequest($authInfo, $task);
 

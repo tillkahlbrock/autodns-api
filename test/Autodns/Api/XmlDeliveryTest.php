@@ -47,7 +47,7 @@ class XmlDeliveryTest extends TestCase
             ->method('convert')
             ->with($request);
 
-        $this->buildDelivery()->send(self::SOME_URL, $this->someTask(), $this->someAuthInfo());
+        $this->buildDelivery()->send(self::SOME_URL, $this->someAuthInfo(), $this->someTask());
     }
 
     /**
@@ -66,7 +66,7 @@ class XmlDeliveryTest extends TestCase
             ->method('post')
             ->with($url, $this->anything(), $xml);
 
-        $this->buildDelivery()->send($url, $this->someTask(), $this->someAuthInfo());
+        $this->buildDelivery()->send($url, $this->someAuthInfo(), $this->someTask());
     }
 
     /**
@@ -85,7 +85,7 @@ class XmlDeliveryTest extends TestCase
             ->method('convert')
             ->with($xml);
 
-        $this->buildDelivery()->send(self::SOME_URL, $this->someTask(), $this->someAuthInfo());
+        $this->buildDelivery()->send(self::SOME_URL, $this->someAuthInfo(), $this->someTask());
     }
 
     /**
@@ -97,7 +97,7 @@ class XmlDeliveryTest extends TestCase
 
         $this->xmlToArrayConverter->with('convert', $convertedResponse);
 
-        $this->assertSame($convertedResponse, $this->buildDelivery()->send(self::SOME_URL, $this->someTask(), $this->someAuthInfo()));
+        $this->assertSame($convertedResponse, $this->buildDelivery()->send(self::SOME_URL, $this->someAuthInfo(), $this->someTask()));
     }
 
     /**
