@@ -32,4 +32,15 @@ class Info
     {
         return $this->username;
     }
+
+    public function getAuthInfo()
+    {
+        return array(
+            'auth' => array(
+                'user' => $this->username,
+                'password' => $this->password,
+                'context' => $this->context
+            )
+        );
+    }
 }

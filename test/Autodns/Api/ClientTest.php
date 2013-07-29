@@ -2,6 +2,7 @@
 
 use Autodns\Api\Client\Method\Provider;
 use Autodns\Api\XmlDelivery;
+use Autodns\Api\Account\Info;
 
 class ClientTest extends TestCase
 {
@@ -19,6 +20,11 @@ class ClientTest extends TestCase
      */
     private $delivery;
 
+    /**
+     * @var Info | TestDataBuilder_StubBuilder | PHPUnit_Framework_MockObject_MockObject
+     */
+    private $accountInfo;
+
     protected function setUp()
     {
         parent::setUp();
@@ -26,6 +32,7 @@ class ClientTest extends TestCase
         $this->methodProvider = $this->aStub('Autodns\Api\Client\Method\Provider')
             ->with('fetchMethod', $this->aMethod());
         $this->delivery = $this->aStub('Autodns\Api\XmlDelivery');
+        $this->accountInfo = $this->aStub('Autodns\Api\Account\Info')->with('getAuthInfo', array());
     }
 
     /**
@@ -65,11 +72,38 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function itShouldSendTheTaskToTheGivenUrl()
+    public function itShouldFetchTheAuthInfo()
+    {
+        $this->accountInfo = $this->accountInfo->build();
+        $this->accountInfo
+            ->expects($this->once())
+            ->method('getAuthInfo');
+
+        $this->buildClient()->call(self::SOME_METHOD_NAME, self::SOME_URL, $this->somePayload());
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldCallTheDeliveryWithTheGivenUrl()
     {
         $url = self::SOME_URL;
-        $task = array('some' => 'task');
 
+        $this->delivery = $this->delivery->build();
+        $this->delivery
+            ->expects($this->once())
+            ->method('send')
+            ->with($url, $this->anything(), $this->anything());
+
+        $this->buildClient()->call(self::SOME_METHOD_NAME, $url, $this->somePayload());
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldSendTheTask()
+    {
+        $task = array('some' => 'task');
         $method = $this->aMethod()->with('createTask', $task);
         $this->methodProvider->with('fetchMethod', $method);
 
@@ -77,9 +111,26 @@ class ClientTest extends TestCase
         $this->delivery
             ->expects($this->once())
             ->method('send')
-            ->with($url, $task);
+            ->with($this->anything(), $task, $this->anything());
 
-        $this->buildClient()->call(self::SOME_METHOD_NAME, $url, $this->somePayload());
+        $this->buildClient()->call(self::SOME_METHOD_NAME, self::SOME_URL, $this->somePayload());
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldSendAuthInfo()
+    {
+        $authInfo = array('some' => 'auth');
+        $this->accountInfo->with('getAuthInfo', $authInfo);
+
+        $this->delivery = $this->delivery->build();
+        $this->delivery
+            ->expects($this->once())
+            ->method('send')
+            ->with($this->anything(), $this->anything(), $authInfo);
+
+        $this->buildClient()->call(self::SOME_METHOD_NAME, self::SOME_URL, $this->somePayload());
     }
 
     /**
@@ -103,7 +154,8 @@ class ClientTest extends TestCase
             ->with(
                 array(
                     $this->methodProvider,
-                    $this->delivery
+                    $this->delivery,
+                    $this->accountInfo
                 )
             )->build();
     }
@@ -119,10 +171,5 @@ class ClientTest extends TestCase
     private function aMethod()
     {
         return $this->aStub('Autodns\Api\Client\Method')->with('createTask', array());
-    }
-
-    private function someRequest()
-    {
-        return array();
     }
 }

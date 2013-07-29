@@ -16,11 +16,6 @@ class XmlDelivery
     private $arrayXmlConverter;
 
     /**
-     * @var \Autodns\Api\Account\Info
-     */
-    private $accountInfo;
-
-    /**
      * @var \Buzz\Browser
      */
     private $sender;
@@ -32,13 +27,11 @@ class XmlDelivery
 
     public function __construct(
         ArrayToXmlConverter $arrayXmlConverter,
-        Info $accountInfo,
         Browser $sender,
         XmlToArrayConverter $xmlToArrayConverter
     )
     {
         $this->arrayXmlConverter = $arrayXmlConverter;
-        $this->accountInfo = $accountInfo;
         $this->sender = $sender;
         $this->xmlToArrayConverter = $xmlToArrayConverter;
     }
@@ -46,11 +39,12 @@ class XmlDelivery
     /**
      * @param string $url
      * @param array $task
+     * @param array $authInfo
      * @return string
      */
-    public function send($url, array $task)
+    public function send($url, array $task, array $authInfo)
     {
-        $request = $this->buildRequest($task);
+        $request = $this->buildRequest($authInfo, $task);
 
         $xml = $this->arrayXmlConverter->convert($request);
 
@@ -59,15 +53,8 @@ class XmlDelivery
         return $this->xmlToArrayConverter->convert($response->getContent());
     }
 
-    private function buildRequest($task)
+    private function buildRequest($authInfo, $task)
     {
-        return array(
-            'auth' => array(
-                'user' => $this->accountInfo->getUsername(),
-                'password' => $this->accountInfo->getPassword(),
-                'context' => $this->accountInfo->getContext()
-            ),
-            'task' => $task
-        );
+        return array_merge($authInfo, $task);
     }
 }

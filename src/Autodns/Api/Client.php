@@ -4,6 +4,7 @@ namespace Autodns\Api;
 
 use Autodns\Api\Client\Method\Provider;
 use Autodns\Api\XmlDelivery;
+use Autodns\Api\Account\Info;
 
 class Client
 {
@@ -17,10 +18,16 @@ class Client
      */
     private $delivery;
 
-    public function __construct(Provider $methodProvider, XmlDelivery $delivery)
+    /**
+     * @var Info
+     */
+    private $accountInfo;
+
+    public function __construct(Provider $methodProvider, XmlDelivery $delivery, Info $accountInfo)
     {
         $this->methodProvider = $methodProvider;
         $this->delivery = $delivery;
+        $this->accountInfo = $accountInfo;
     }
 
     public function call($methodName, $url, array $payload)
@@ -29,6 +36,8 @@ class Client
 
         $task = $method->createTask($payload);
 
-        return $this->delivery->send($url, $task);
+        $authInfo = $this->accountInfo->getAuthInfo();
+
+        return $this->delivery->send($url, $task, $authInfo);
     }
 }

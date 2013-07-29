@@ -14,11 +14,6 @@ class XmlDeliveryTest extends TestCase
     private $arrayToXmlConverter;
 
     /**
-     * @var Autodns\Api\Account\Info | TestDataBuilder_StubBuilder | PHPUnit_Framework_MockObject_MockObject
-     */
-    private $accountInfo;
-
-    /**
      * @var Buzz\Browser | TestDataBuilder_StubBuilder | PHPUnit_Framework_MockObject_MockObject
      */
     private $sender;
@@ -33,7 +28,6 @@ class XmlDeliveryTest extends TestCase
         parent::setUp();
 
         $this->arrayToXmlConverter = $this->aStub('Tool\ArrayToXmlConverter');
-        $this->accountInfo = $this->aStub('Autodns\Api\Account\Info');
         $this->sender = $this->aStub('Buzz\Browser')->with('post', $this->aResponse());
         $this->xmlToArrayConverter = $this->aStub('Tool\XmlToArrayConverter');
     }
@@ -41,14 +35,19 @@ class XmlDeliveryTest extends TestCase
     /**
      * @test
      */
-    public function itShouldConvertTheRequestToXml()
+    public function itShouldConvertTheTaskAndAuthInfoToXml()
     {
+        $authInfo = $this->someAuthInfo();
+        $task = $this->someTask();
+        $request = array_merge($authInfo, $task);
+
         $this->arrayToXmlConverter = $this->arrayToXmlConverter->build();
         $this->arrayToXmlConverter
             ->expects($this->once())
-            ->method('convert');
+            ->method('convert')
+            ->with($request);
 
-        $this->buildDelivery()->send(self::SOME_URL, $this->someTask());
+        $this->buildDelivery()->send(self::SOME_URL, $this->someTask(), $this->someAuthInfo());
     }
 
     /**
@@ -67,7 +66,7 @@ class XmlDeliveryTest extends TestCase
             ->method('post')
             ->with($url, $this->anything(), $xml);
 
-        $this->buildDelivery()->send($url, $this->someTask());
+        $this->buildDelivery()->send($url, $this->someTask(), $this->someAuthInfo());
     }
 
     /**
@@ -86,7 +85,7 @@ class XmlDeliveryTest extends TestCase
             ->method('convert')
             ->with($xml);
 
-        $this->buildDelivery()->send(self::SOME_URL, $this->someTask());
+        $this->buildDelivery()->send(self::SOME_URL, $this->someTask(), $this->someAuthInfo());
     }
 
     /**
@@ -98,7 +97,7 @@ class XmlDeliveryTest extends TestCase
 
         $this->xmlToArrayConverter->with('convert', $convertedResponse);
 
-        $this->assertSame($convertedResponse, $this->buildDelivery()->send(self::SOME_URL, $this->someTask()));
+        $this->assertSame($convertedResponse, $this->buildDelivery()->send(self::SOME_URL, $this->someTask(), $this->someAuthInfo()));
     }
 
     /**
@@ -110,21 +109,28 @@ class XmlDeliveryTest extends TestCase
             ->with(
                 array(
                     $this->arrayToXmlConverter,
-                    $this->accountInfo,
                     $this->sender,
                     $this->xmlToArrayConverter
                 )
             )->build();
     }
 
-    /**
-     * @return array
-     */
     private function someTask()
     {
         return array(
-            'some'  => 'weired',
-            'array' => 'structure'
+            'task' => array(
+                'some'  => 'weired',
+                'array' => 'structure'
+            )
+        );
+    }
+
+    private function someAuthInfo()
+    {
+        return array(
+            'auth' => array(
+                'some' => 'thing'
+            )
         );
     }
 

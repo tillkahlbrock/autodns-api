@@ -59,10 +59,10 @@ XML;
             new Client\Method\Provider(),
             new \Autodns\Api\XmlDelivery(
                 new \Tool\ArrayToXmlConverter(),
-                new Autodns\Api\Account\Info('some_user', 'superPassword', 2),
                 $sender,
                 new \Tool\XmlToArrayConverter()
-            )
+            ),
+            new Autodns\Api\Account\Info('some_user', 'superPassword', 2)
         );
 
         $payload = array(
