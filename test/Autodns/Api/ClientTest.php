@@ -65,15 +65,19 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function itShouldSendTheRequestToTheGivenUrl()
+    public function itShouldSendTheTaskToTheGivenUrl()
     {
         $url = self::SOME_URL;
+        $task = array('some' => 'task');
+
+        $method = $this->aMethod()->with('createTask', $task);
+        $this->methodProvider->with('fetchMethod', $method);
 
         $this->delivery = $this->delivery->build();
         $this->delivery
             ->expects($this->once())
             ->method('send')
-            ->with($url, $this->anything());
+            ->with($url, $task);
 
         $this->buildClient()->call(self::SOME_METHOD_NAME, $url, $this->somePayload());
     }
