@@ -47,7 +47,7 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function itShouldCreateARequestWithTheFetchMethodSupplyingTheGivenPayload()
+    public function itShouldCreateATaskWithTheFetchedMethod()
     {
         $payload = $this->somePayload();
 
@@ -67,11 +67,13 @@ class ClientTest extends TestCase
      */
     public function itShouldSendTheRequestToTheGivenUrl()
     {
-        $request = $this->someRequest();
         $url = self::SOME_URL;
 
-        $method = $this->aMethod()->with('createTask', $request);
-        $this->methodProvider->with('fetchMethod', $method);
+        $this->delivery = $this->delivery->build();
+        $this->delivery
+            ->expects($this->once())
+            ->method('send')
+            ->with($url, $this->anything());
 
         $this->buildClient()->call(self::SOME_METHOD_NAME, $url, $this->somePayload());
     }
