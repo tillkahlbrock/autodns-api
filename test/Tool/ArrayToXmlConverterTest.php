@@ -44,9 +44,53 @@ class ArrayToXmlConverterTest extends TestCase
 </request>
 XML;
 
+        $this->assertRequestIsConvertedToExpectedXml($request, $expectedXml);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldGenerateATagForEachValue()
+    {
+        $request = array(
+            'task' => array(
+                'code'                 => '0105',
+                'domain'               => array(
+                    'name' => 'some-domain.net'
+                ),
+                'key' => array('payable, created')
+            )
+        );
+
+        $expectedXml = <<<XML
+<?xml version="1.0"encoding="utf-8" ?>
+<request>
+    <task>
+        <code>0105</code>
+        <domain>
+            <name>some-domain.net</name>
+        </domain>
+        <key>payable</key>
+        <key>created</key>
+    </task>
+</request>
+XML;
+
+        $this->assertRequestIsConvertedToExpectedXml($request, $expectedXml);
+    }
+
+    /**
+     * @param $request
+     * @param $expectedXml
+     */
+    private function assertRequestIsConvertedToExpectedXml($request, $expectedXml)
+    {
         $converter = new Tool\ArrayToXmlConverter();
 
-        $this->assertEquals($this->removeWhiteSpaces($expectedXml), $this->removeWhiteSpaces($converter->convert($request)));
+        $this->assertEquals(
+            $this->removeWhiteSpaces($expectedXml),
+            $this->removeWhiteSpaces($converter->convert($request))
+        );
     }
 
     private function removeWhiteSpaces($string)
