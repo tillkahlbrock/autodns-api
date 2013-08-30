@@ -10,7 +10,6 @@ class Array2XMLTest extends PHPUnit_Framework_TestCase
     public function itShouldWork()
     {
         $request = new Autodns\Api\Client\Request(
-            new \Autodns\Api\Client\Request\Auth('username', 'password', 'context'),
             new \Autodns\Api\Client\Request\Task\DomainListInquiry(
                 array('offset' => 0, 'limit' => 20, 'children' => 0),
                 array('created'),
@@ -25,6 +24,8 @@ class Array2XMLTest extends PHPUnit_Framework_TestCase
             'replyTo@this.com',
             'some identifier'
         );
+
+        $request->setAuth(array('user' => 'username', 'password' => 'password', 'context' => 'context'));
 
         $expectedXml = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>

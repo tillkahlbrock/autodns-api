@@ -27,6 +27,7 @@ class Client
 
     public function call($url, Request $request)
     {
+        $request->setAuth($this->accountInfo->getAuthInfo());
         return $this->delivery->send($url, $request);
     }
 }

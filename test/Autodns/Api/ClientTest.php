@@ -45,6 +45,23 @@ class ClientTest extends TestCase
     }
 
     /**
+     * @test
+     */
+    public function itShouldSetTheAuthToTheRequest()
+    {
+        $authInfo = array('user', 'password', 2);
+        $this->accountInfo->with('getAuthInfo', $authInfo);
+
+        $request = $this->aStub('Autodns\Api\Client\Request')->build();
+        $request
+            ->expects($this->once())
+            ->method('setAuth')
+            ->with($this->identicalTo($authInfo));
+
+        $this->buildClient()->call(self::SOME_URL, $request);
+    }
+
+    /**
      * @return Autodns\Api\Client
      */
     private function buildClient()

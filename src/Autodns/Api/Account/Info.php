@@ -2,7 +2,6 @@
 
 namespace Autodns\Api\Account;
 
-
 class Info
 {
     private $username;
@@ -36,11 +35,9 @@ class Info
     public function getAuthInfo()
     {
         return array(
-            'auth' => array(
-                'user' => $this->username,
-                'password' => $this->password,
-                'context' => $this->context
-            )
+            'user' => $this->username,
+            'password' => $this->password,
+            'context' => $this->context
         );
     }
 }

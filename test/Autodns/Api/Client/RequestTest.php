@@ -8,7 +8,6 @@ class RequestTest extends PHPUnit_Framework_TestCase
     public function itShouldReturnAnArrayRepresentationOfARequest()
     {
         $request = new Autodns\Api\Client\Request(
-            new \Autodns\Api\Client\Request\Auth('username', 'password', 'context'),
             new \Autodns\Api\Client\Request\Task\DomainListInquiry(
                 array('offset' => 0, 'limit' => 20, 'children' => 0),
                 array('created', 'payable'),
@@ -25,11 +24,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         );
 
         $expectedRequestArray = array(
-            'auth' => array(
-                'user' => 'username',
-                'password' => 'password',
-                'context' => 'context'
-            ),
+            'auth' => array(),
             'task' => array(
                 'code' => '0105',
                 'view' => array(

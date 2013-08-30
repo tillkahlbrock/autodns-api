@@ -8,10 +8,6 @@ use Autodns\Api\Client\Request\Task;
 class Request
 {
     /**
-     * @var Auth
-     */
-    private $auth;
-    /**
      * @var Task
      */
     private $task;
@@ -20,17 +16,24 @@ class Request
 
     private $ctid;
 
-    public function __construct(Auth $auth, Task $task, $replyTo, $ctid)
+    private $auth;
+
+    public function __construct(Task $task, $replyTo, $ctid)
     {
-        $this->auth = $auth;
         $this->task = $task;
         $this->replyTo = $replyTo;
         $this->ctid = $ctid;
+        $this->auth = array();
     }
 
     public function getTask()
     {
         return $this->task;
+    }
+
+    public function setAuth(array $auth)
+    {
+        $this->auth = $auth;
     }
 
     public function getAuth()
@@ -41,7 +44,7 @@ class Request
     public function asArray()
     {
         $request = array(
-            'auth' => $this->auth->asArray(),
+            'auth' => $this->auth,
             'task' => $this->task->asArray()
         );
 
