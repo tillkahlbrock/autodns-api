@@ -3,7 +3,7 @@
 namespace Autodns\Api\Client;
 
 use Autodns\Api\Client\Request\Auth;
-use Autodns\Api\Client\Task;
+use Autodns\Api\Client\Request\Task;
 
 class Request
 {

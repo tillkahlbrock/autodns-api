@@ -1,6 +1,6 @@
 <?php
 
-namespace Autodns\Api\Client;
+namespace Autodns\Api\Client\Request;
 
 
 interface Task
