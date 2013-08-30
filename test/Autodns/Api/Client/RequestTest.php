@@ -12,9 +12,12 @@ class RequestTest extends PHPUnit_Framework_TestCase
             new \Autodns\Api\Client\Request\Task\DomainListInquiry(
                 array('offset' => 0, 'limit' => 20, 'children' => 0),
                 array('created_at'),
-                new Autodns\Api\Client\Request\Task\Query\AndQuery(
-                    new Autodns\Api\Client\Request\Task\Query\Parameter('name', 'like', '*.at'),
-                    new Autodns\Api\Client\Request\Task\Query\Parameter('created_at', 'lt', '2012-12-*')
+                new Autodns\Api\Client\Request\Task\Query\OrQuery(
+                    new Autodns\Api\Client\Request\Task\Query\AndQuery(
+                        new Autodns\Api\Client\Request\Task\Query\Parameter('name', 'like', '*.at'),
+                        new Autodns\Api\Client\Request\Task\Query\Parameter('created_at', 'lt', '2012-12-*')
+                    ),
+                    new Autodns\Api\Client\Request\Task\Query\Parameter('name', 'like', '*.de')
                 )
             ),
             'replyTo@this.com',
@@ -35,16 +38,25 @@ class RequestTest extends PHPUnit_Framework_TestCase
                 ),
                 'key' => array('created_at'),
                 'where' => array(
-                    'and' => array(
+                    'or' => array(
+                        array(
+                            'and' => array(
+                                array(
+                                    'key' => 'name',
+                                    'operator' => 'like',
+                                    'value' => '*.at'
+                                ),
+                                array(
+                                    'key' => 'created_at',
+                                    'operator' => 'lt',
+                                    'value' => '2012-12-*'
+                                )
+                            )
+                        ),
                         array(
                             'key' => 'name',
                             'operator' => 'like',
-                            'value' => '*.at'
-                        ),
-                        array(
-                            'key' => 'created_at',
-                            'operator' => 'lt',
-                            'value' => '2012-12-*'
+                            'value' => '*.de'
                         )
                     )
                 )
@@ -53,6 +65,8 @@ class RequestTest extends PHPUnit_Framework_TestCase
             'ctid' => 'some identifier'
         );
 
-        $this->assertEquals($expectedRequestArray, $request->asArray());
+        $output = $request->asArray();
+
+        $this->assertEquals($expectedRequestArray, $output);
     }
 }

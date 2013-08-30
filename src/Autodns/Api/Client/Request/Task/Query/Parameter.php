@@ -21,12 +21,9 @@ class Parameter implements Query
     public function asArray()
     {
         return array(
-            'key' => array(
-                'key' => $this->key,
-                'operator' => $this->operator,
-                'value' => $this->value
-
-            )
+            'key' => $this->key,
+            'operator' => $this->operator,
+            'value' => $this->value
         );
     }
 }

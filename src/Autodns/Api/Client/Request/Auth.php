@@ -19,6 +19,10 @@ class Auth
 
     public function asArray()
     {
-        return array();
+        return array(
+            'user' => $this->user,
+            'password' => $this->password,
+            'context' => $this->context
+        );
     }
 }

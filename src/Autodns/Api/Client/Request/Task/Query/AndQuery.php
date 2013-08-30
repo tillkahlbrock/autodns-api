@@ -2,7 +2,6 @@
 
 namespace Autodns\Api\Client\Request\Task\Query;
 
-
 use Autodns\Api\Client\Request\Task\Query;
 
 class AndQuery implements Query
@@ -19,6 +18,11 @@ class AndQuery implements Query
 
     public function asArray()
     {
-        return array('and' => array($this->left->asArray(), $this->right->asArray()));
+        return array(
+            'and' => array(
+                $this->left->asArray(),
+                $this->right->asArray()
+            )
+        );
     }
 }

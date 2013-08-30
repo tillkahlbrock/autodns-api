@@ -31,6 +31,10 @@ class DomainListInquiry implements Task
 
     public function asArray()
     {
-        // TODO: Implement asArray() method.
+        return array(
+            'view' => $this->view,
+            'key' => $this->keys,
+            'where' => $this->query->asArray()
+        );
     }
 }

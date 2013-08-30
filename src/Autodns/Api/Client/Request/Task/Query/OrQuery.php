@@ -2,7 +2,6 @@
 
 namespace Autodns\Api\Client\Request\Task\Query;
 
-
 use Autodns\Api\Client\Request\Task\Query;
 
 class OrQuery implements Query
@@ -19,6 +18,11 @@ class OrQuery implements Query
 
     public function asArray()
     {
-        return array('or' => array($this->left->asArray(), $this->right->asArray()));
+        return array(
+            'or' => array(
+                $this->left->asArray(),
+                $this->right->asArray()
+            )
+        );
     }
 }
