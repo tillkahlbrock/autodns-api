@@ -7,8 +7,11 @@ use Autodns\Api\Client\Request;
 
 class RequestBuilder
 {
-    public function build()
+    /**
+     * @return Request
+     */
+    public static function build()
     {
-        return null;
+        return new Request();
     }
 }

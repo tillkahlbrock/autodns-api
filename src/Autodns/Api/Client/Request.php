@@ -18,12 +18,43 @@ class Request
 
     private $auth;
 
-    public function __construct(Task $task, $replyTo, $ctid)
+    public function __construct(Task $task = null, $replyTo = null, $ctid = null)
     {
         $this->task = $task;
         $this->replyTo = $replyTo;
         $this->ctid = $ctid;
         $this->auth = array();
+    }
+
+    /**
+     * @param string $type
+     * @return Task
+     */
+    public function ofType($type)
+    {
+        $className = 'Autodns\Api\Client\Request\Task\\' . $type;
+        $this->task = new $className();
+        return $this->task;
+    }
+
+    /**
+     * @param $replyTo
+     * @return $this
+     */
+    public function withReplyTo($replyTo)
+    {
+        $this->replyTo = $replyTo;
+        return $this;
+    }
+
+    /**
+     * @param $ctid
+     * @return $this
+     */
+    public function withCtid($ctid)
+    {
+        $this->ctid = $ctid;
+        return $this;
     }
 
     public function getTask()

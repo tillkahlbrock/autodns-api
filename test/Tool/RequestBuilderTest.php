@@ -1,5 +1,7 @@
 <?php
 
+use Tool\RequestBuilder;
+
 class RequestBuilderTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -7,9 +9,7 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function itShouldBuildARequest()
     {
-        $requestBuilder = new Tool\RequestBuilder();
-
-//        $this->assertInstanceOf('Autodns\Api\Client\Request', $requestBuilder->build());
+        $this->assertInstanceOf('Autodns\Api\Client\Request', RequestBuilder::build());
     }
 
     /**
@@ -17,40 +17,32 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function itShouldDo()
     {
+        $query = new Autodns\Api\Client\Request\Task\Query\OrQuery(
+            new Autodns\Api\Client\Request\Task\Query\AndQuery(
+                new Autodns\Api\Client\Request\Task\Query\Parameter('name', 'like', '*.at'),
+                new Autodns\Api\Client\Request\Task\Query\Parameter('created', 'lt', '2012-12-*')
+            ),
+            new Autodns\Api\Client\Request\Task\Query\Parameter('name', 'like', '*.de')
+        );
+
         $expectedRequest = new Autodns\Api\Client\Request(
             new \Autodns\Api\Client\Request\Task\DomainListInquiry(
                 array('offset' => 0, 'limit' => 20, 'children' => 0),
                 array('created', 'payable'),
-                new Autodns\Api\Client\Request\Task\Query\OrQuery(
-                    new Autodns\Api\Client\Request\Task\Query\AndQuery(
-                        new Autodns\Api\Client\Request\Task\Query\Parameter('name', 'like', '*.at'),
-                        new Autodns\Api\Client\Request\Task\Query\Parameter('created', 'lt', '2012-12-*')
-                    ),
-                    new Autodns\Api\Client\Request\Task\Query\Parameter('name', 'like', '*.de')
-                )
+                $query
             ),
             'replyTo@this.com',
             'some identifier'
         );
 
-        $requestBuilder = new Tool\RequestBuilder();
-        $actualRequest = $requestBuilder->build()
+        $actualRequest = RequestBuilder::build()
+            ->withReplyTo('replyTo@this.com')
+            ->withCtid('some identifier');
+        $actualRequest
             ->ofType('DomainListInquiry')
             ->withView(array('offset' => 0, 'limit' => 20, 'children' => 0))
             ->withKeys(array('created', 'payable'))
-            ->withQuery(
-                array(
-                    'or' => array(
-                        'and' => array(
-                            array('name', 'like', '*.at'),
-                            array('created', 'lt', '2012-12-*')
-                        ),
-                        array('name', 'like', '*.de')
-                    )
-                )
-            )
-            ->withReplyTo('replyTo@this.com')
-            ->withCtid('some identifier');
+            ->withQuery($query);
 
         $this->assertEquals($expectedRequest, $actualRequest);
     }
