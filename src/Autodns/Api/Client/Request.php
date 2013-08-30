@@ -28,6 +28,16 @@ class Request
         $this->ctid = $ctid;
     }
 
+    public function getTask()
+    {
+        return $this->task;
+    }
+
+    public function getAuth()
+    {
+        return $this->auth;
+    }
+
     public function asArray()
     {
         $request = array(

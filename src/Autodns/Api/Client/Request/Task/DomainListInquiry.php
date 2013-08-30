@@ -32,6 +32,7 @@ class DomainListInquiry implements Task
     public function asArray()
     {
         return array(
+            'code' => '0105',
             'view' => $this->view,
             'key' => $this->keys,
             'where' => $this->query->asArray()

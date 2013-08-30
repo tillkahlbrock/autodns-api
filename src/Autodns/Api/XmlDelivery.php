@@ -3,6 +3,7 @@
 namespace Autodns\Api;
 
 use Autodns\Api\Account\Info;
+use Autodns\Api\Client\Request;
 use Tool\ArrayToXmlConverter;
 use Tool\XmlToArrayConverter;
 use Buzz\Browser;
@@ -38,23 +39,15 @@ class XmlDelivery
 
     /**
      * @param string $url
-     * @param array $authInfo
-     * @param array $task
+     * @param Client\Request $request
      * @return string
      */
-    public function send($url, array $authInfo, array $task)
+    public function send($url, Request $request)
     {
-        $request = $this->buildRequest($authInfo, $task);
-
-        $xml = $this->arrayXmlConverter->convert($request);
+        $xml = $this->arrayXmlConverter->convert($request->asArray());
 
         $response = $this->sender->post($url, array(), $xml);
 
         return $this->xmlToArrayConverter->convert($response->getContent());
-    }
-
-    private function buildRequest($authInfo, $task)
-    {
-        return array_merge($authInfo, $task);
     }
 }

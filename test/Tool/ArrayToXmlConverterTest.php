@@ -14,11 +14,11 @@ class ArrayToXmlConverterTest extends TestCase
                 'context' => 2
             ),
             'task' => array(
-                'code'   => '0101003',
+                'code' => '0101003',
                 'domain' => array(
-                    'name'                => 'some-domain.com',
-                    'payable'             => '2012-01-15',
-                    'period'              => 1,
+                    'name' => 'some-domain.com',
+                    'payable' => '2012-01-15',
+                    'period' => 1,
                     'remove_cancellation' => 'no'
                 )
             )
@@ -54,8 +54,8 @@ XML;
     {
         $request = array(
             'task' => array(
-                'code'                 => '0105',
-                'domain'               => array(
+                'code' => '0105',
+                'domain' => array(
                     'name' => 'some-domain.net'
                 ),
                 'key' => array('payable, created')

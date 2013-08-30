@@ -3,16 +3,12 @@
 namespace Autodns\Api;
 
 use Autodns\Api\Client\Method\Provider;
+use Autodns\Api\Client\Request;
 use Autodns\Api\XmlDelivery;
 use Autodns\Api\Account\Info;
 
 class Client
 {
-    /**
-     * @var Provider
-     */
-    private $methodProvider;
-
     /**
      * @var XmlDelivery
      */
@@ -23,21 +19,14 @@ class Client
      */
     private $accountInfo;
 
-    public function __construct(Provider $methodProvider, XmlDelivery $delivery, Info $accountInfo)
+    public function __construct(XmlDelivery $delivery, Info $accountInfo)
     {
-        $this->methodProvider = $methodProvider;
         $this->delivery = $delivery;
         $this->accountInfo = $accountInfo;
     }
 
-    public function call($methodName, $url, array $payload)
+    public function call($url, Request $request)
     {
-        $method = $this->methodProvider->fetchMethod($methodName);
-
-        $task = $method->createTask($payload);
-
-        $authInfo = $this->accountInfo->getAuthInfo();
-
-        return $this->delivery->send($url, $authInfo, $task);
+        return $this->delivery->send($url, $request);
     }
 }
