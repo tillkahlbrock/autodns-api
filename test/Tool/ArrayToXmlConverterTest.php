@@ -25,7 +25,7 @@ class ArrayToXmlConverterTest extends TestCase
         );
 
         $expectedXml = <<<XML
-<?xml version="1.0"encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <request>
     <auth>
         <user>some user</user>
@@ -58,12 +58,12 @@ XML;
                 'domain' => array(
                     'name' => 'some-domain.net'
                 ),
-                'key' => array('payable, created')
+                'key' => array('payable', 'created')
             )
         );
 
         $expectedXml = <<<XML
-<?xml version="1.0"encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <request>
     <task>
         <code>0105</code>
@@ -87,14 +87,9 @@ XML;
     {
         $converter = new Tool\ArrayToXmlConverter();
 
-        $this->assertEquals(
-            $this->removeWhiteSpaces($expectedXml),
-            $this->removeWhiteSpaces($converter->convert($request))
+        $this->assertXmlStringEqualsXmlString(
+            $expectedXml,
+            $converter->convert($request)
         );
-    }
-
-    private function removeWhiteSpaces($string)
-    {
-        return preg_replace('/\s/', '', $string);
     }
 }

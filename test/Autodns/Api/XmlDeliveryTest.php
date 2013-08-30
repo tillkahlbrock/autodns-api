@@ -35,19 +35,18 @@ class XmlDeliveryTest extends TestCase
     /**
      * @test
      */
-    public function itShouldConvertTheTaskAndAuthInfoToXml()
+    public function itShouldConvertTheRequestToXml()
     {
-        $authInfo = $this->someAuthInfo();
-        $task = $this->someTask();
-        $request = array_merge($authInfo, $task);
+        $requestArray = array();
+        $request = $this->aStub('Autodns\Api\Client\Request')->with('asArray', $requestArray);
 
         $this->arrayToXmlConverter = $this->arrayToXmlConverter->build();
         $this->arrayToXmlConverter
             ->expects($this->once())
             ->method('convert')
-            ->with($request);
+            ->with($requestArray);
 
-        $this->buildDelivery()->send(self::SOME_URL, $this->someAuthInfo(), $this->someTask());
+        $this->send(self::SOME_URL, $request->build());
     }
 
     /**
@@ -66,7 +65,7 @@ class XmlDeliveryTest extends TestCase
             ->method('post')
             ->with($url, $this->anything(), $xml);
 
-        $this->buildDelivery()->send($url, $this->someAuthInfo(), $this->someTask());
+        $this->send($url);
     }
 
     /**
@@ -85,7 +84,7 @@ class XmlDeliveryTest extends TestCase
             ->method('convert')
             ->with($xml);
 
-        $this->buildDelivery()->send(self::SOME_URL, $this->someAuthInfo(), $this->someTask());
+        $this->send();
     }
 
     /**
@@ -97,7 +96,7 @@ class XmlDeliveryTest extends TestCase
 
         $this->xmlToArrayConverter->with('convert', $convertedResponse);
 
-        $this->assertSame($convertedResponse, $this->buildDelivery()->send(self::SOME_URL, $this->someAuthInfo(), $this->someTask()));
+        $this->assertSame($convertedResponse, $this->send());
     }
 
     /**
@@ -115,30 +114,33 @@ class XmlDeliveryTest extends TestCase
             )->build();
     }
 
-    private function someTask()
-    {
-        return array(
-            'task' => array(
-                'some'  => 'weired',
-                'array' => 'structure'
-            )
-        );
-    }
-
-    private function someAuthInfo()
-    {
-        return array(
-            'auth' => array(
-                'some' => 'thing'
-            )
-        );
-    }
-
     /**
      * @return TestDataBuilder_StubBuilder
      */
     private function aResponse()
     {
         return $this->aStub('Buzz\Message\MessageInterface')->with('getContent', self::SOME_XML);
+    }
+
+    /**
+     * @return Autodns\Api\Client\Request | PHPUnit_Framework_MockObject_MockObject
+     */
+    private function aRequest()
+    {
+        return $this->aStub('Autodns\Api\Client\Request')->with('asArray', array())->build();
+    }
+
+    /**
+     * @param $url
+     * @param $request
+     * @return string
+     */
+    private function send($url = self::SOME_URL, $request = null)
+    {
+        if (!$request) {
+            $request = $this->aRequest();
+        }
+
+        return $this->buildDelivery()->send($url, $request);
     }
 }

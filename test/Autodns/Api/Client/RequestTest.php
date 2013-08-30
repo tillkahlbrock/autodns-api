@@ -11,11 +11,11 @@ class RequestTest extends PHPUnit_Framework_TestCase
             new \Autodns\Api\Client\Request\Auth('username', 'password', 'context'),
             new \Autodns\Api\Client\Request\Task\DomainListInquiry(
                 array('offset' => 0, 'limit' => 20, 'children' => 0),
-                array('created_at'),
+                array('created', 'payable'),
                 new Autodns\Api\Client\Request\Task\Query\OrQuery(
                     new Autodns\Api\Client\Request\Task\Query\AndQuery(
                         new Autodns\Api\Client\Request\Task\Query\Parameter('name', 'like', '*.at'),
-                        new Autodns\Api\Client\Request\Task\Query\Parameter('created_at', 'lt', '2012-12-*')
+                        new Autodns\Api\Client\Request\Task\Query\Parameter('created', 'lt', '2012-12-*')
                     ),
                     new Autodns\Api\Client\Request\Task\Query\Parameter('name', 'like', '*.de')
                 )
@@ -31,12 +31,13 @@ class RequestTest extends PHPUnit_Framework_TestCase
                 'context' => 'context'
             ),
             'task' => array(
+                'code' => '0105',
                 'view' => array(
                     'offset' => 0,
                     'limit' => 20,
                     'children' => 0
                 ),
-                'key' => array('created_at'),
+                'key' => array('created', 'payable'),
                 'where' => array(
                     'or' => array(
                         array(
@@ -47,7 +48,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
                                     'value' => '*.at'
                                 ),
                                 array(
-                                    'key' => 'created_at',
+                                    'key' => 'created',
                                     'operator' => 'lt',
                                     'value' => '2012-12-*'
                                 )
