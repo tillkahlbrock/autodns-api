@@ -13,7 +13,7 @@ Design goals
 Usage
 -----
 
-### Building ApiClient:
+### ApiClient
 
 ``` php
 $client = new Client(
@@ -26,7 +26,7 @@ $client = new Client(
 );
 ```
 
-### Building Request with Query
+### Request with Query
 
 ``` php
 $query = new Autodns\Api\Client\Request\Task\Query\OrQuery(
@@ -50,7 +50,11 @@ $request
 ### Call
 
 ``` php
-$client->call(self::SOME_URL, $request)
+$response = $client->call(self::SOME_URL, $request)
+
+$response->isSuccessful(); // -> true
+$response->getStatusCode(); // -> "S12345"
+$response->getStatusType(); // -> "success"
 ```
 
 Todo

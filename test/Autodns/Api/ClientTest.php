@@ -23,7 +23,7 @@ class ClientTest extends TestCase
     {
         parent::setUp();
 
-        $this->delivery = $this->aStub('Autodns\Api\XmlDelivery');
+        $this->delivery = $this->aStub('Autodns\Api\XmlDelivery')->with('send', array());
         $this->accountInfo = $this->aStub('Autodns\Api\Account\Info')->with('getAuthInfo', array());
     }
 

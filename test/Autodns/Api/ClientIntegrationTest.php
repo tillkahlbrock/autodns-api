@@ -15,7 +15,7 @@ class ClientIntegrationTest extends TestCase
         $responseXml = $this->getResponseXml();
         $response = $this->aStub('Buzz\Message\MessageInterface')->with('getContent', $responseXml);
         $expectedRequest = $this->getExpectedRequestXml();
-        $expectedResult = $this->getExpectedResultAsArray();
+        $expectedResult = $this->getExpectedResult();
 
         $sender = $this->aStub('Buzz\Browser')->with('post', $response)->build();
         $sender
@@ -72,9 +72,9 @@ XML;
     }
 
     /**
-     * @return array
+     * @return Autodns\Api\Client\Response
      */
-    private function getExpectedResultAsArray()
+    private function getExpectedResult()
     {
         $expectedResult = array(
             'result' => array(
@@ -108,7 +108,8 @@ XML;
                 )
             )
         );
-        return $expectedResult;
+
+        return new Client\Response($expectedResult);
     }
 
     /**
