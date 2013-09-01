@@ -3,6 +3,7 @@
     xsi:noNamespaceSchemaLocation="http://phpunit.de/phpunit.xsd"
     backupGlobals="false"
     verbose="true"
+    bootstrap="test/bootstrap.php"
     colors="true">
 
     <testsuites>

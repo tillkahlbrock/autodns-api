@@ -1,7 +1,6 @@
 <?php
 
 use Autodns\Api\Client;
-use Autodns\Api\Client\Method;
 
 class ClientIntegrationTest extends TestCase
 {
