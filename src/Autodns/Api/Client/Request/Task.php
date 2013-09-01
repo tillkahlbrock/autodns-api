@@ -3,7 +3,7 @@
 namespace Autodns\Api\Client\Request;
 
 
-use Autodns\Api\Client\Request\Task\Query;
+use Autodns\Api\Client\Request\Task\QueryInterface;
 
 interface Task
 {
@@ -25,8 +25,8 @@ interface Task
     public function withKeys(array $keys);
 
     /**
-     * @param Query $query
+     * @param QueryInterface $query
      * @return Task
      */
-    public function withQuery(Query $query);
+    public function withQuery(QueryInterface $query);
 }

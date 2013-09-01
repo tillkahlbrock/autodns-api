@@ -1,9 +1,9 @@
 <?php
 namespace Autodns\Api\Client\Request\Task\Query;
 
-use Autodns\Api\Client\Request\Task\Query;
+use Autodns\Api\Client\Request\Task\QueryInterface;
 
-class Parameter implements Query
+class Parameter implements QueryInterface
 {
     private $key;
 

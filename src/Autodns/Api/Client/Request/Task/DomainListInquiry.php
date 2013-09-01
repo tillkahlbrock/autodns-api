@@ -12,7 +12,7 @@ class DomainListInquiry implements Task
      */
     private $keys;
     /**
-     * @var Query
+     * @var QueryInterface
      */
     private $query;
 
@@ -21,7 +21,7 @@ class DomainListInquiry implements Task
      */
     private $view;
 
-    public function __construct(array $view = null, array $keys = null, Query $query = null)
+    public function __construct(array $view = null, array $keys = null, QueryInterface $query = null)
     {
         $this->view = $view;
         $this->keys = $keys;
@@ -60,10 +60,10 @@ class DomainListInquiry implements Task
     }
 
     /**
-     * @param Query $query
+     * @param QueryInterface $query
      * @return $this
      */
-    public function withQuery(Query $query)
+    public function withQuery(QueryInterface $query)
     {
         $this->query = $query;
         return $this;

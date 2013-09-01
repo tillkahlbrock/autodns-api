@@ -3,7 +3,7 @@
 namespace Autodns\Api\Client\Request\Task;
 
 
-interface Query
+interface QueryInterface
 {
     public function asArray();
 }
