@@ -3,6 +3,8 @@ Autodns-API
 
 A full-featured implementation of the [AutoDNS-XML-API](http://www.internetx.com/en/software/autodns/xml-api.html).
 
+[![Build Status](https://secure.travis-ci.org/tillkahlbrock/autodns-api.png?branch=master)](http://travis-ci.org/tillkahlbrock/autodns-api)
+
 Design goals
 ------------
 
