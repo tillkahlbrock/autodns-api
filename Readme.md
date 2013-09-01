@@ -16,14 +16,8 @@ Usage
 ### ApiClient
 
 ``` php
-$client = new Client(
-    new Autodns\Api\XmlDelivery(
-        new Tool\ArrayToXmlConverter(),
-        $sender,
-        new Tool\XmlToArrayConverter()
-    ),
-    new Autodns\Api\Account\Info('user', 'password', 4)
-);
+$accountInfo = new Autodns\Api\Account\Info('username', 'password', $context);
+$client = Autodns\Api\Client\Factory::create($accountInfo);
 ```
 
 ### Request with Query
