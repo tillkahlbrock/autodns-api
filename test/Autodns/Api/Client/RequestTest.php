@@ -1,6 +1,7 @@
 <?php
 
-use Tool\QueryBuilder;
+use \Tool\QueryBuilder;
+use \Tool\RequestBuilder;
 
 class RequestTest extends PHPUnit_Framework_TestCase
 {
@@ -18,7 +19,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
             array('name', 'like', '*.de')
         );
 
-        $request = \Tool\RequestBuilder::build()
+        $request = RequestBuilder::build()
             ->withReplyTo('replyTo@this.com')
             ->withCtid('some identifier');
         $request
