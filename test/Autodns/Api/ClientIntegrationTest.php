@@ -184,12 +184,13 @@ RequestXml;
      */
     private function buildRequest()
     {
-        $query = new Autodns\Api\Client\Request\Task\Query\OrQuery(
-            new Autodns\Api\Client\Request\Task\Query\AndQuery(
-                new Autodns\Api\Client\Request\Task\Query\Parameter('name', 'like', '*.at'),
-                new Autodns\Api\Client\Request\Task\Query\Parameter('created', 'lt', '2012-12-*')
+        $query = Tool\QueryBuilder::build();
+        $query = $query->addOr(
+            $query->addAnd(
+                array('name', 'like', '*.at'),
+                array('created', 'lt', '2012-12-*')
             ),
-            new Autodns\Api\Client\Request\Task\Query\Parameter('name', 'like', '*.de')
+            array('name', 'like', '*.de')
         );
 
         $request = \Tool\RequestBuilder::build()
