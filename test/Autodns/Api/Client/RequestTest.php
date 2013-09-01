@@ -7,21 +7,23 @@ class RequestTest extends PHPUnit_Framework_TestCase
      */
     public function itShouldReturnAnArrayRepresentationOfARequest()
     {
-        $request = new Autodns\Api\Client\Request(
-            new \Autodns\Api\Client\Request\Task\DomainListInquiry(
-                array('offset' => 0, 'limit' => 20, 'children' => 0),
-                array('created', 'payable'),
-                new Autodns\Api\Client\Request\Task\Query\OrQuery(
-                    new Autodns\Api\Client\Request\Task\Query\AndQuery(
-                        new Autodns\Api\Client\Request\Task\Query\Parameter('name', 'like', '*.at'),
-                        new Autodns\Api\Client\Request\Task\Query\Parameter('created', 'lt', '2012-12-*')
-                    ),
-                    new Autodns\Api\Client\Request\Task\Query\Parameter('name', 'like', '*.de')
-                )
+        $query = Tool\QueryBuilder::build();
+        $query = $query->addOr(
+            $query->addAnd(
+                array('name', 'like', '*.at'),
+                array('created', 'lt', '2012-12-*')
             ),
-            'replyTo@this.com',
-            'some identifier'
+            array('name', 'like', '*.de')
         );
+
+        $request = \Tool\RequestBuilder::build()
+            ->withReplyTo('replyTo@this.com')
+            ->withCtid('some identifier');
+        $request
+            ->ofType('DomainListInquiry')
+            ->withView(array('offset' => 0, 'limit' => 20, 'children' => 0))
+            ->withKeys(array('created', 'payable'))
+            ->withQuery($query);
 
         $expectedRequestArray = array(
             'auth' => array(),
