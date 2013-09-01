@@ -1,5 +1,7 @@
 <?php
 
+use Tool\QueryBuilder;
+
 class RequestTest extends PHPUnit_Framework_TestCase
 {
     /**
@@ -7,7 +9,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
      */
     public function itShouldReturnAnArrayRepresentationOfARequest()
     {
-        $query = Tool\QueryBuilder::build();
+        $query = QueryBuilder::build();
         $query = $query->addOr(
             $query->addAnd(
                 array('name', 'like', '*.at'),
