@@ -35,13 +35,15 @@ class ClientTest extends TestCase
         $url = self::SOME_URL;
         $request = $this->aStub('Autodns\Api\Client\Request')->build();
 
+        $this->accountInfo->with('getUrl', $url);
+
         $this->delivery = $this->delivery->build();
         $this->delivery
             ->expects($this->once())
             ->method('send')
             ->with($url, $request);
 
-        $this->buildClient()->call($url, $request);
+        $this->buildClient()->call($request);
     }
 
     /**
@@ -58,7 +60,7 @@ class ClientTest extends TestCase
             ->method('setAuth')
             ->with($this->identicalTo($authInfo));
 
-        $this->buildClient()->call(self::SOME_URL, $request);
+        $this->buildClient()->call($request);
     }
 
     /**

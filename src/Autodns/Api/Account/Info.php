@@ -4,17 +4,30 @@ namespace Autodns\Api\Account;
 
 class Info
 {
+    private $url;
+
     private $username;
 
     private $password;
 
     private $context;
 
-    public function __construct($username, $password, $context)
+    public function __construct(
+        $url,
+        $username,
+        $password,
+        $context
+    )
     {
+        $this->url = $url;
         $this->username = $username;
         $this->password = $password;
         $this->context = $context;
+    }
+
+    public function getUrl()
+    {
+        return $this->url;
     }
 
     public function getContext()

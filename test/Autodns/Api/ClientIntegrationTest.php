@@ -27,7 +27,7 @@ class ClientIntegrationTest extends TestCase
 
         $request = $this->buildRequest();
 
-        $this->assertEquals($expectedResult, $client->call(self::SOME_URL, $request));
+        $this->assertEquals($expectedResult, $client->call($request));
     }
 
     /**
@@ -174,7 +174,7 @@ RequestXml;
                 $sender,
                 new Tool\XmlToArrayConverter()
             ),
-            new Autodns\Api\Account\Info('user', 'password', 4)
+            new Autodns\Api\Account\Info(self::SOME_URL, 'user', 'password', 4)
         );
         return $client;
     }

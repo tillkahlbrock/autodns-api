@@ -31,13 +31,13 @@ class Client
     }
 
     /**
-     * @param $url
      * @param Request $request
      * @return Response
      */
-    public function call($url, Request $request)
+    public function call(Request $request)
     {
         $request->setAuth($this->accountInfo->getAuthInfo());
+        $url = $this->accountInfo->getUrl();
         $response = $this->delivery->send($url, $request);
 
         return new Response($response);

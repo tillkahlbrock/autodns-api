@@ -16,7 +16,13 @@ Usage
 ### ApiClient
 
 ``` php
-$accountInfo = new Autodns\Api\Account\Info('username', 'password', $context);
+$accountInfo = new Autodns\Api\Account\Info(
+    'https://api.autodns.com',
+    'username',
+    'password',
+    $context
+);
+
 $client = Autodns\Api\Client\Factory::create($accountInfo);
 ```
 
@@ -45,7 +51,7 @@ $request
 ### Call
 
 ``` php
-$response = $client->call(self::SOME_URL, $request)
+$response = $client->call($request)
 
 $response->isSuccessful(); // -> true
 $response->getStatusCode(); // -> "S12345"
