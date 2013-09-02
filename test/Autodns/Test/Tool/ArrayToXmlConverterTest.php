@@ -1,5 +1,10 @@
 <?php
 
+namespace Autodns\Test\Tool;
+
+use Autodns\Test\TestCase;
+use Autodns\Tool\ArrayToXmlConverter;
+
 class ArrayToXmlConverterTest extends TestCase
 {
     /**
@@ -85,7 +90,7 @@ XML;
      */
     private function assertRequestIsConvertedToExpectedXml($request, $expectedXml)
     {
-        $converter = new Tool\ArrayToXmlConverter();
+        $converter = new ArrayToXmlConverter();
 
         $this->assertXmlStringEqualsXmlString(
             $expectedXml,

@@ -1,8 +1,15 @@
 <?php
 
-use Tool\RequestBuilder;
+namespace Autodns\Test\Tool;
 
-class RequestBuilderTest extends \PHPUnit_Framework_TestCase
+use Autodns\Api\Client\Request\Task\Query\AndQuery;
+use Autodns\Api\Client\Request\Task\Query\OrQuery;
+use Autodns\Api\Client\Request\Task\Query\Parameter;
+use Autodns\Api\Client\Request;
+use Autodns\Test\TestCase;
+use Autodns\Tool\RequestBuilder;
+
+class RequestBuilderTest extends TestCase
 {
     /**
      * @test
@@ -17,16 +24,16 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function itShouldDo()
     {
-        $query = new Autodns\Api\Client\Request\Task\Query\OrQuery(
-            new Autodns\Api\Client\Request\Task\Query\AndQuery(
-                new Autodns\Api\Client\Request\Task\Query\Parameter('name', 'like', '*.at'),
-                new Autodns\Api\Client\Request\Task\Query\Parameter('created', 'lt', '2012-12-*')
+        $query = new OrQuery(
+            new AndQuery(
+                new Parameter('name', 'like', '*.at'),
+                new Parameter('created', 'lt', '2012-12-*')
             ),
-            new Autodns\Api\Client\Request\Task\Query\Parameter('name', 'like', '*.de')
+            new Parameter('name', 'like', '*.de')
         );
 
-        $expectedRequest = new Autodns\Api\Client\Request(
-            new \Autodns\Api\Client\Request\Task\DomainListInquiry(
+        $expectedRequest = new Request(
+            new Request\Task\DomainListInquiry(
                 array('offset' => 0, 'limit' => 20, 'children' => 0),
                 array('created', 'payable'),
                 $query

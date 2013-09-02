@@ -1,6 +1,6 @@
 <?php
 
-namespace Tool;
+namespace Autodns\Tool;
 
 
 use Autodns\Api\Client\Request;

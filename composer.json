@@ -7,10 +7,6 @@
         "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
-        "psr-0": {
-            "Autodns": "src",
-            "Tool": "src",
-            "": "test"
-        }
+        "psr-0": { "Autodns": "src" }
     }
 }

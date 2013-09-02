@@ -1,24 +1,29 @@
 <?php
 
-use Tool\Array2Xml;
+namespace Autodns\Test\Tool;
 
-class Array2XMLTest extends PHPUnit_Framework_TestCase
+
+use Autodns\Api\Client\Request;
+use Autodns\Test\TestCase;
+use Autodns\Tool\Array2Xml;
+
+class Array2XMLTest extends TestCase
 {
     /**
      * @test
      */
     public function itShouldWork()
     {
-        $request = new Autodns\Api\Client\Request(
+        $request = new Request(
             new \Autodns\Api\Client\Request\Task\DomainListInquiry(
                 array('offset' => 0, 'limit' => 20, 'children' => 0),
                 array('created'),
-                new Autodns\Api\Client\Request\Task\Query\OrQuery(
-                    new Autodns\Api\Client\Request\Task\Query\AndQuery(
-                        new Autodns\Api\Client\Request\Task\Query\Parameter('name', 'like', '*.at'),
-                        new Autodns\Api\Client\Request\Task\Query\Parameter('created', 'lt', '2012-12-*')
+                new Request\Task\Query\OrQuery(
+                    new Request\Task\Query\AndQuery(
+                        new Request\Task\Query\Parameter('name', 'like', '*.at'),
+                        new Request\Task\Query\Parameter('created', 'lt', '2012-12-*')
                     ),
-                    new Autodns\Api\Client\Request\Task\Query\Parameter('name', 'like', '*.de')
+                    new Request\Task\Query\Parameter('name', 'like', '*.de')
                 )
             ),
             'replyTo@this.com',

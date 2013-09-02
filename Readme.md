@@ -31,7 +31,7 @@ $client = Autodns\Api\Client\Factory::create($accountInfo);
 ### Request with Query
 
 ``` php
-$query = Tool\QueryBuilder::build();
+$query = Autodns\Tool\QueryBuilder::build();
 $query = $query->addOr(
     $query->addAnd(
         array('name', 'like', '*.at'),
@@ -40,7 +40,7 @@ $query = $query->addOr(
     array('name', 'like', '*.de')
 );
 
-$request = \Tool\RequestBuilder::build()
+$request = \Autodns\Tool\RequestBuilder::build()
     ->withReplyTo('replyTo@this.com')
     ->withCtid('some identifier');
 $request

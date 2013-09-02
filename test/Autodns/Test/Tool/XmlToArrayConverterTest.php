@@ -1,5 +1,10 @@
 <?php
 
+namespace Autodns\Test\Tool;
+
+use Autodns\Test\TestCase;
+use Autodns\Tool\XmlToArrayConverter;
+
 class XmlToArrayConverterTest extends TestCase
 {
     /**
@@ -44,7 +49,7 @@ XML;
             )
         );
 
-        $converter = new Tool\XmlToArrayConverter();
+        $converter = new XmlToArrayConverter();
 
         $this->assertEquals($expectedArray, $converter->convert($inputXml));
     }

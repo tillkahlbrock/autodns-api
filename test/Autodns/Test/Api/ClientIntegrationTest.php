@@ -1,6 +1,15 @@
 <?php
 
+namespace Autodns\Test\Api;
+
+use Autodns\Api\Account\Info;
 use Autodns\Api\Client;
+use Autodns\Api\XmlDelivery;
+use Autodns\Test\TestCase;
+use Autodns\Tool\ArrayToXmlConverter;
+use Autodns\Tool\QueryBuilder;
+use Autodns\Tool\RequestBuilder;
+use Autodns\Tool\XmlToArrayConverter;
 
 class ClientIntegrationTest extends TestCase
 {
@@ -71,7 +80,7 @@ XML;
     }
 
     /**
-     * @return Autodns\Api\Client\Response
+     * @return \Autodns\Api\Client\Response
      */
     private function getExpectedResult()
     {
@@ -168,12 +177,12 @@ RequestXml;
     private function buildClient($sender)
     {
         $client = new Client(
-            new Autodns\Api\XmlDelivery(
-                new Tool\ArrayToXmlConverter(),
+            new XmlDelivery(
+                new ArrayToXmlConverter(),
                 $sender,
-                new Tool\XmlToArrayConverter()
+                new XmlToArrayConverter()
             ),
-            new Autodns\Api\Account\Info(self::SOME_URL, 'user', 'password', 4)
+            new Info(self::SOME_URL, 'user', 'password', 4)
         );
         return $client;
     }
@@ -183,7 +192,7 @@ RequestXml;
      */
     private function buildRequest()
     {
-        $query = Tool\QueryBuilder::build();
+        $query = QueryBuilder::build();
         $query = $query->addOr(
             $query->addAnd(
                 array('name', 'like', '*.at'),
@@ -192,7 +201,7 @@ RequestXml;
             array('name', 'like', '*.de')
         );
 
-        $request = \Tool\RequestBuilder::build()
+        $request = RequestBuilder::build()
             ->withReplyTo('replyTo@this.com')
             ->withCtid('some identifier');
         $request

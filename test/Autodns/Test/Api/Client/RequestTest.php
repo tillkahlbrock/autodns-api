@@ -1,9 +1,11 @@
 <?php
 
-use \Tool\QueryBuilder;
-use \Tool\RequestBuilder;
+namespace Autodns\Test\Api\Client;
 
-class RequestTest extends PHPUnit_Framework_TestCase
+use Autodns\Tool\QueryBuilder;
+use Autodns\Tool\RequestBuilder;
+
+class RequestTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test

@@ -4,15 +4,15 @@ namespace Autodns\Api;
 
 use Autodns\Api\Account\Info;
 use Autodns\Api\Client\Request;
-use Tool\ArrayToXmlConverter;
-use Tool\XmlToArrayConverter;
+use Autodns\Tool\ArrayToXmlConverter;
+use Autodns\Tool\XmlToArrayConverter;
 use Buzz\Browser;
 use Buzz\Message\MessageInterface;
 
 class XmlDelivery
 {
     /**
-     * @var \Tool\ArrayToXmlConverter
+     * @var \Autodns\Tool\ArrayToXmlConverter
      */
     private $arrayXmlConverter;
 
@@ -22,7 +22,7 @@ class XmlDelivery
     private $sender;
 
     /**
-     * @var \Tool\XmlToArrayConverter
+     * @var \Autodns\Tool\XmlToArrayConverter
      */
     private $xmlToArrayConverter;
 

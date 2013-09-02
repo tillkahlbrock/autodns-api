@@ -1,7 +1,10 @@
 <?php
 
+namespace Autodns\Test\Api;
+
 use Autodns\Api\XmlDelivery;
 use Autodns\Api\Account\Info;
+use Autodns\Test\TestCase;
 
 class ClientTest extends TestCase
 {
@@ -10,12 +13,12 @@ class ClientTest extends TestCase
     const SOME_METHOD_NAME = 'some method name';
 
     /**
-     * @var XmlDelivery | TestDataBuilder_StubBuilder | PHPUnit_Framework_MockObject_MockObject
+     * @var XmlDelivery | \TestDataBuilder_StubBuilder | \PHPUnit_Framework_MockObject_MockObject
      */
     private $delivery;
 
     /**
-     * @var Info | TestDataBuilder_StubBuilder | PHPUnit_Framework_MockObject_MockObject
+     * @var Info | \TestDataBuilder_StubBuilder | \PHPUnit_Framework_MockObject_MockObject
      */
     private $accountInfo;
 
@@ -64,7 +67,7 @@ class ClientTest extends TestCase
     }
 
     /**
-     * @return Autodns\Api\Client
+     * @return \Autodns\Api\Client
      */
     private function buildClient()
     {

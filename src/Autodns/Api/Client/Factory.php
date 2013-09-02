@@ -7,8 +7,8 @@ use Autodns\Api\Account\Info;
 use Autodns\Api\Client;
 use Autodns\Api\XmlDelivery;
 use Buzz\Browser;
-use Tool\ArrayToXmlConverter;
-use Tool\XmlToArrayConverter;
+use Autodns\Tool\ArrayToXmlConverter;
+use Autodns\Tool\XmlToArrayConverter;
 
 class Factory
 {

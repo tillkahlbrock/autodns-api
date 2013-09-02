@@ -1,6 +1,6 @@
 <?php
 
-namespace Tool;
+namespace Autodns\Tool;
 
 use \DOMDocument;
 use \Exception;

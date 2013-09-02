@@ -1,25 +1,27 @@
 <?php
 
-use Buzz\Message\RequestInterface;
+namespace Autodns\Test\Api;
 
-class XmlDeliveryTest extends TestCase 
+use Autodns\Test\TestCase;
+
+class XmlDeliveryTest extends TestCase
 {
     const SOME_URL = 'some-url';
 
     const SOME_XML = 'some xml';
 
     /**
-     * @var Tool\ArrayToXmlConverter | TestDataBuilder_StubBuilder | PHPUnit_Framework_MockObject_MockObject
+     * @var \Autodns\Tool\ArrayToXmlConverter | \TestDataBuilder_StubBuilder | \PHPUnit_Framework_MockObject_MockObject
      */
     private $arrayToXmlConverter;
 
     /**
-     * @var Buzz\Browser | TestDataBuilder_StubBuilder | PHPUnit_Framework_MockObject_MockObject
+     * @var \Buzz\Browser | \TestDataBuilder_StubBuilder | \PHPUnit_Framework_MockObject_MockObject
      */
     private $sender;
 
     /**
-     * @var Tool\XmlToArrayConverter | TestDataBuilder_StubBuilder | PHPUnit_Framework_MockObject_MockObject
+     * @var \Autodns\Tool\XmlToArrayConverter | \TestDataBuilder_StubBuilder | \PHPUnit_Framework_MockObject_MockObject
      */
     private $xmlToArrayConverter;
 
@@ -27,9 +29,9 @@ class XmlDeliveryTest extends TestCase
     {
         parent::setUp();
 
-        $this->arrayToXmlConverter = $this->aStub('Tool\ArrayToXmlConverter');
+        $this->arrayToXmlConverter = $this->aStub('Autodns\Tool\ArrayToXmlConverter');
         $this->sender = $this->aStub('Buzz\Browser')->with('post', $this->aResponse());
-        $this->xmlToArrayConverter = $this->aStub('Tool\XmlToArrayConverter');
+        $this->xmlToArrayConverter = $this->aStub('Autodns\Tool\XmlToArrayConverter');
     }
 
     /**
@@ -100,7 +102,7 @@ class XmlDeliveryTest extends TestCase
     }
 
     /**
-     * @return Autodns\Api\XmlDelivery
+     * @return \Autodns\Api\XmlDelivery
      */
     private function buildDelivery()
     {
@@ -115,7 +117,7 @@ class XmlDeliveryTest extends TestCase
     }
 
     /**
-     * @return TestDataBuilder_StubBuilder
+     * @return \TestDataBuilder_StubBuilder
      */
     private function aResponse()
     {
@@ -123,7 +125,7 @@ class XmlDeliveryTest extends TestCase
     }
 
     /**
-     * @return Autodns\Api\Client\Request | PHPUnit_Framework_MockObject_MockObject
+     * @return \Autodns\Api\Client\Request | \PHPUnit_Framework_MockObject_MockObject
      */
     private function aRequest()
     {
