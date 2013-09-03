@@ -6,6 +6,8 @@ namespace Autodns\Test\Tool;
 use Autodns\Api\Client\Request;
 use Autodns\Test\TestCase;
 use Autodns\Tool\Array2Xml;
+use Autodns\Tool\QueryBuilder;
+use Autodns\Tool\RequestBuilder;
 
 class Array2XMLTest extends TestCase
 {
@@ -14,21 +16,19 @@ class Array2XMLTest extends TestCase
      */
     public function itShouldWork()
     {
-        $request = new Request(
-            new \Autodns\Api\Client\Request\Task\DomainListInquiry(
-                array('offset' => 0, 'limit' => 20, 'children' => 0),
-                array('created'),
-                new Request\Task\Query\OrQuery(
-                    new Request\Task\Query\AndQuery(
-                        new Request\Task\Query\Parameter('name', 'like', '*.at'),
-                        new Request\Task\Query\Parameter('created', 'lt', '2012-12-*')
+        $request = RequestBuilder::build()->withReplyTo('replyTo@this.com')->withCtid('some identifier');
+        $request->ofType('DomainListInquiry')
+            ->withView(array('offset' => 0, 'limit' => 20, 'children' => 0))
+            ->withKeys(array('created', 'updated'))
+            ->withQuery(
+                QueryBuilder::build()->addOr(
+                    QueryBuilder::build()->addAnd(
+                        array('name', 'like', '*.at'),
+                        array('created', 'lt', '2012-12-*')
                     ),
-                    new Request\Task\Query\Parameter('name', 'like', '*.de')
+                    array('name', 'like', '*.de')
                 )
-            ),
-            'replyTo@this.com',
-            'some identifier'
-        );
+            );
 
         $request->setAuth(array('user' => 'username', 'password' => 'password', 'context' => 'context'));
 
@@ -48,6 +48,7 @@ class Array2XMLTest extends TestCase
       <children>0</children>
     </view>
     <key>created</key>
+    <key>updated</key>
     <where>
       <or>
         <and>
@@ -73,7 +74,8 @@ class Array2XMLTest extends TestCase
 </request>
 XML;
 
-        $generatedXml = Array2Xml::createXML('request', $request->asArray())->saveXML();
+        $array2Xml = new Array2Xml();
+        $generatedXml = $array2Xml->buildXml('request', $request->asArray())->saveXML();
 
         $this->assertXmlStringEqualsXmlString($expectedXml, $generatedXml);
 
