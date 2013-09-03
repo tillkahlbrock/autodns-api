@@ -15,8 +15,7 @@ class Array2XMLTest extends TestCase
      */
     public function itShouldWork()
     {
-        $request = Request::build()->withReplyTo('replyTo@this.com')->withCtid('some identifier');
-        $request->ofType('DomainListInquiry')
+        $task = Request\TaskBuilder::build('DomainListInquiry')
             ->withView(array('offset' => 0, 'limit' => 20, 'children' => 0))
             ->withKeys(array('created', 'updated'))
             ->withQuery(
@@ -29,6 +28,7 @@ class Array2XMLTest extends TestCase
                 )
             );
 
+        $request = new Request($task);
         $request->setAuth(array('user' => 'username', 'password' => 'password', 'context' => 'context'));
 
         $expectedXml = <<<XML
@@ -68,8 +68,6 @@ class Array2XMLTest extends TestCase
       </or>
     </where>
   </task>
-  <replyTo>replyTo@this.com</replyTo>
-  <ctid>some identifier</ctid>
 </request>
 XML;
 

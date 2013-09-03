@@ -33,9 +33,9 @@ class ClientIntegrationTest extends TestCase
 
         $client = $this->buildClient($sender);
 
-        $request = $this->buildRequest();
+        $task = $this->buildTask();
 
-        $this->assertEquals($expectedResult, $client->call($request));
+        $this->assertEquals($expectedResult, $client->call($task));
     }
 
     /**
@@ -162,8 +162,6 @@ XML;
       </or>
     </where>
   </task>
-  <replyTo>replyTo@this.com</replyTo>
-  <ctid>some identifier</ctid>
 </request>
 
 RequestXml;
@@ -188,9 +186,9 @@ RequestXml;
     }
 
     /**
-     * @return Client\Request
+     * @return Client\Request\Task
      */
-    private function buildRequest()
+    private function buildTask()
     {
         $query = Query::build();
         $query = $query->addOr(
@@ -201,15 +199,11 @@ RequestXml;
             array('name', 'like', '*.de')
         );
 
-        $request = Request::build()
-            ->withReplyTo('replyTo@this.com')
-            ->withCtid('some identifier');
-        $request
-            ->ofType('DomainListInquiry')
+        $task = Request\TaskBuilder::build('DomainListInquiry')
             ->withView(array('offset' => 0, 'limit' => 20, 'children' => 0))
             ->withKeys(array('created', 'payable'))
             ->withQuery($query);
 
-        return $request;
+        return $task;
     }
 }

@@ -18,14 +18,6 @@ class Request
 
     private $auth;
 
-    /**
-     * @return Request
-     */
-    public static function build()
-    {
-        return new Request();
-    }
-
     public function __construct(Task $task = null, $replyTo = null, $ctid = null)
     {
         $this->task = $task;

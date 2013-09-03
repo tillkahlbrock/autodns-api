@@ -2,6 +2,7 @@
 
 namespace Autodns\Test\Api;
 
+use Autodns\Api\Client\Request;
 use Autodns\Api\XmlDelivery;
 use Autodns\Api\Account\Info;
 use Autodns\Test\TestCase;
@@ -33,37 +34,39 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function itShouldSetTheAuthToTheRequest()
+    public function itShouldSendARequestWithTheGivenTaskAndTheAuthInformation()
     {
+        $task = new Request\Task\DomainListInquiry();
         $authInfo = array('user', 'password', 2);
         $this->accountInfo->with('getAuthInfo', $authInfo);
 
-        $request = $this->aRequest();
-        $request
-            ->expects($this->once())
-            ->method('setAuth')
-            ->with($this->identicalTo($authInfo));
+        $request = new Request($task);
+        $request->setAuth($authInfo);
 
-        $this->buildClient()->call($request);
+        $this->delivery = $this->delivery->build();
+        $this->delivery
+            ->expects($this->once())
+            ->method('send')
+            ->with($this->anything(), $request);
+
+        $this->buildClient()->call($task);
     }
 
     /**
      * @test
      */
-    public function itShouldCallTheDeliveryWithTheUrlFromTheAccountInfoAndTheGivenRequest()
+    public function itShouldCallTheDeliveryWithTheUrlFromTheAccountInfo()
     {
         $url = self::SOME_URL;
-        $request = $this->aRequest();
-
         $this->accountInfo->with('getUrl', $url);
 
         $this->delivery = $this->delivery->build();
         $this->delivery
             ->expects($this->once())
             ->method('send')
-            ->with($url, $request);
+            ->with($url, $this->anything());
 
-        $this->buildClient()->call($request);
+        $this->buildClient()->call($this->aTask());
     }
 
     /**
@@ -75,7 +78,7 @@ class ClientTest extends TestCase
 
         $this->delivery->with('send', $deliveryResponse);
 
-        $response = $this->buildClient()->call($this->aRequest());
+        $response = $this->buildClient()->call($this->aTask());
 
         $this->assertEquals($deliveryResponse, $response->getPayload());
     }
@@ -95,10 +98,11 @@ class ClientTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \Autodns\Api\Client\Request\Task | \PHPUnit_Framework_MockObject_MockObject
      */
-    private function aRequest()
+    private function aTask()
     {
-        return $this->aStub('Autodns\Api\Client\Request')->build();
+        $task = $this->aStub('Autodns\Api\Client\Request\Task')->build();
+        return $task;
     }
 }

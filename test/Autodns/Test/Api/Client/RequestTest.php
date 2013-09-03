@@ -21,14 +21,12 @@ class RequestTest extends \PHPUnit_Framework_TestCase
             array('name', 'like', '*.de')
         );
 
-        $request = Request::build()
-            ->withReplyTo('replyTo@this.com')
-            ->withCtid('some identifier');
-        $request
-            ->ofType('DomainListInquiry')
+        $task = Request\TaskBuilder::build('DomainListInquiry')
             ->withView(array('offset' => 0, 'limit' => 20, 'children' => 0))
             ->withKeys(array('created', 'payable'))
             ->withQuery($query);
+
+        $request = new Request($task);
 
         $expectedRequestArray = array(
             'auth' => array(),
@@ -63,9 +61,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
                         )
                     )
                 )
-            ),
-            'replyTo' => 'replyTo@this.com',
-            'ctid' => 'some identifier'
+            )
         );
 
         $output = $request->asArray();
