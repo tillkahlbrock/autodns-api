@@ -126,7 +126,7 @@ XML;
     private function getExpectedRequestXml()
     {
         $expectedRequest = <<<RequestXml
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <request>
   <auth>
     <user>user</user>

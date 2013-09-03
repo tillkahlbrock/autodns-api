@@ -74,7 +74,8 @@ class Array2XMLTest extends TestCase
 </request>
 XML;
 
-        $generatedXml = Array2Xml::createXML('request', $request->asArray())->saveXML();
+        $array2Xml = new Array2Xml();
+        $generatedXml = $array2Xml->buildXml('request', $request->asArray())->saveXML();
 
         $this->assertXmlStringEqualsXmlString($expectedXml, $generatedXml);
 

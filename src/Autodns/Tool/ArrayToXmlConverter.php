@@ -10,6 +10,7 @@ class ArrayToXmlConverter
      */
     public function convert(array $data)
     {
-        return Array2Xml::createXML('request', $data)->saveXML();
+        $converter = new Array2Xml();
+        return $converter->buildXml('request', $data)->saveXML();
     }
 }
