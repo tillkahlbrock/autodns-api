@@ -33,10 +33,27 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function itShouldCallTheDeliveryWithTheGivenUrlAndRequest()
+    public function itShouldSetTheAuthToTheRequest()
+    {
+        $authInfo = array('user', 'password', 2);
+        $this->accountInfo->with('getAuthInfo', $authInfo);
+
+        $request = $this->aRequest();
+        $request
+            ->expects($this->once())
+            ->method('setAuth')
+            ->with($this->identicalTo($authInfo));
+
+        $this->buildClient()->call($request);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldCallTheDeliveryWithTheUrlFromTheAccountInfoAndTheGivenRequest()
     {
         $url = self::SOME_URL;
-        $request = $this->aStub('Autodns\Api\Client\Request')->build();
+        $request = $this->aRequest();
 
         $this->accountInfo->with('getUrl', $url);
 
@@ -52,18 +69,15 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function itShouldSetTheAuthToTheRequest()
+    public function itShouldReturnAResponseBuildFromTheDeliveryResponse()
     {
-        $authInfo = array('user', 'password', 2);
-        $this->accountInfo->with('getAuthInfo', $authInfo);
+        $deliveryResponse = array('some' => 'response');
 
-        $request = $this->aStub('Autodns\Api\Client\Request')->build();
-        $request
-            ->expects($this->once())
-            ->method('setAuth')
-            ->with($this->identicalTo($authInfo));
+        $this->delivery->with('send', $deliveryResponse);
 
-        $this->buildClient()->call($request);
+        $response = $this->buildClient()->call($this->aRequest());
+
+        $this->assertEquals($deliveryResponse, $response->getPayload());
     }
 
     /**
@@ -78,5 +92,13 @@ class ClientTest extends TestCase
             )
         )->build();
         return $client;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    private function aRequest()
+    {
+        return $this->aStub('Autodns\Api\Client\Request')->build();
     }
 }
