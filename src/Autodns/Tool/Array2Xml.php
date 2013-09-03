@@ -88,47 +88,47 @@ class Array2Xml
         $xml = self::getXMLRoot();
         $node = $xml->createElement($node_name);
 
-        if (is_array($arr)) {
+//        if (is_array($arr)) {
             // get the attributes first.;
-            if (isset($arr['@attributes'])) {
-                foreach ($arr['@attributes'] as $key => $value) {
-                    if (!self::isValidTagName($key)) {
-                        throw new Exception('[Array2Xml] Illegal character in attribute name. attribute: ' . $key . ' in node: ' . $node_name);
-                    }
-                    $node->setAttribute($key, self::bool2str($value));
-                }
-                unset($arr['@attributes']); //remove the key from the array once done.
-            }
+//            if (isset($arr['@attributes'])) {
+//                foreach ($arr['@attributes'] as $key => $value) {
+//                    if (!self::isValidTagName($key)) {
+//                        throw new Exception('[Array2Xml] Illegal character in attribute name. attribute: ' . $key . ' in node: ' . $node_name);
+//                    }
+//                    $node->setAttribute($key, self::bool2str($value));
+//                }
+//                unset($arr['@attributes']); //remove the key from the array once done.
+//            }
 
             // check if it has a value stored in @value, if yes store the value and return
             // else check if its directly stored as string
-            if (isset($arr['@value'])) {
-                $node->appendChild($xml->createTextNode(self::bool2str($arr['@value'])));
-                unset($arr['@value']); //remove the key from the array once done.
-                //return from recursion, as a note with value cannot have child nodes.
-                return $node;
-            } else {
-                if (isset($arr['@cdata'])) {
-                    $node->appendChild($xml->createCDATASection(self::bool2str($arr['@cdata'])));
-                    unset($arr['@cdata']); //remove the key from the array once done.
-                    //return from recursion, as a note with cdata cannot have child nodes.
-                    return $node;
-                }
-            }
-        }
+//            if (isset($arr['@value'])) {
+//                $node->appendChild($xml->createTextNode(self::bool2str($arr['@value'])));
+//                unset($arr['@value']); //remove the key from the array once done.
+//                //return from recursion, as a note with value cannot have child nodes.
+//                return $node;
+//            } else {
+//                if (isset($arr['@cdata'])) {
+//                    $node->appendChild($xml->createCDATASection(self::bool2str($arr['@cdata'])));
+//                    unset($arr['@cdata']); //remove the key from the array once done.
+//                    //return from recursion, as a note with cdata cannot have child nodes.
+//                    return $node;
+//                }
+//            }
+//        }
 
         //create subnodes using recursion
         if (is_array($arr)) {
             // recurse to get the node for that key
             foreach ($arr as $key => $value) {
-                if (!self::isValidTagName($key)) {
-                    throw new Exception('[Array2Xml] Illegal character in tag name. tag: ' . $key . ' in node: ' . $node_name);
-                }
+//                if (!self::isValidTagName($key)) {
+//                    throw new Exception('[Array2Xml] Illegal character in tag name. tag: ' . $key . ' in node: ' . $node_name);
+//                }
                 if (is_array($value) && is_numeric(key($value))) {
                     // MORE THAN ONE NODE OF ITS KIND;
                     // if the new array is numeric index, means it is array of nodes of the same kind
                     // it should follow the parent key name
-                    foreach ($value as $k => $v) {
+                    foreach ($value as $v) {
                         $node->appendChild(self::convert($key, $v));
                     }
                 } else {
