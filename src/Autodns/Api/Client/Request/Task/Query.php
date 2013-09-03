@@ -10,6 +10,14 @@ use Autodns\Api\Client\Request\Task\Query\Parameter;
 class Query
 {
     /**
+     * @return Query
+     */
+    public static function build()
+    {
+        return new Query();
+    }
+
+    /**
      * @param array | QueryInterface $left
      * @param array | QueryInterface $right
      * @return QueryInterface

@@ -6,8 +6,7 @@ namespace Autodns\Test\Tool;
 use Autodns\Api\Client\Request;
 use Autodns\Test\TestCase;
 use Autodns\Tool\Array2Xml;
-use Autodns\Tool\QueryBuilder;
-use Autodns\Tool\RequestBuilder;
+use Autodns\Api\Client\Request\Task\Query;
 
 class Array2XMLTest extends TestCase
 {
@@ -16,13 +15,13 @@ class Array2XMLTest extends TestCase
      */
     public function itShouldWork()
     {
-        $request = RequestBuilder::build()->withReplyTo('replyTo@this.com')->withCtid('some identifier');
+        $request = Request::build()->withReplyTo('replyTo@this.com')->withCtid('some identifier');
         $request->ofType('DomainListInquiry')
             ->withView(array('offset' => 0, 'limit' => 20, 'children' => 0))
             ->withKeys(array('created', 'updated'))
             ->withQuery(
-                QueryBuilder::build()->addOr(
-                    QueryBuilder::build()->addAnd(
+                Query::build()->addOr(
+                    Query::build()->addAnd(
                         array('name', 'like', '*.at'),
                         array('created', 'lt', '2012-12-*')
                     ),

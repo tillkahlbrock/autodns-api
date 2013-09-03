@@ -7,8 +7,8 @@ use Autodns\Api\Client;
 use Autodns\Api\XmlDelivery;
 use Autodns\Test\TestCase;
 use Autodns\Tool\ArrayToXmlConverter;
-use Autodns\Tool\QueryBuilder;
-use Autodns\Tool\RequestBuilder;
+use Autodns\Api\Client\Request\Task\Query;
+use Autodns\Api\Client\Request;
 use Autodns\Tool\XmlToArrayConverter;
 
 class ClientIntegrationTest extends TestCase
@@ -192,7 +192,7 @@ RequestXml;
      */
     private function buildRequest()
     {
-        $query = QueryBuilder::build();
+        $query = Query::build();
         $query = $query->addOr(
             $query->addAnd(
                 array('name', 'like', '*.at'),
@@ -201,7 +201,7 @@ RequestXml;
             array('name', 'like', '*.de')
         );
 
-        $request = RequestBuilder::build()
+        $request = Request::build()
             ->withReplyTo('replyTo@this.com')
             ->withCtid('some identifier');
         $request

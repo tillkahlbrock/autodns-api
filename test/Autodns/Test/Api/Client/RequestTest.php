@@ -2,8 +2,8 @@
 
 namespace Autodns\Test\Api\Client;
 
-use Autodns\Tool\QueryBuilder;
-use Autodns\Tool\RequestBuilder;
+use Autodns\Api\Client\Request\Task\Query;
+use Autodns\Api\Client\Request;
 
 class RequestTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +12,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function itShouldReturnAnArrayRepresentationOfARequest()
     {
-        $query = QueryBuilder::build();
+        $query = Query::build();
         $query = $query->addOr(
             $query->addAnd(
                 array('name', 'like', '*.at'),
@@ -21,7 +21,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
             array('name', 'like', '*.de')
         );
 
-        $request = RequestBuilder::build()
+        $request = Request::build()
             ->withReplyTo('replyTo@this.com')
             ->withCtid('some identifier');
         $request
