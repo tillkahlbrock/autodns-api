@@ -56,8 +56,15 @@ $response->getStatusCode(); // -> "S12345"
 $response->getStatusType(); // -> "success"
 ```
 
-Todo: Implement tasks
+Todo
 ----
+
+## General issues
+
+ * Add some error handling
+ * Make selection of tasks less error prone. By now it is: ```TaskBuilder::build('DomainListInquiry')```
+
+## Autodns tasks
 
 ### Domain
 
