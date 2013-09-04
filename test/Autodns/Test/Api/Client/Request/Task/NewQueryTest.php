@@ -69,7 +69,7 @@ class NewQueryTest extends TestCase
     /**
      * @test
      */
-    public function itShouldCreateANestedExpression()
+    public function itShouldCreateANestedExpressionAOrBAndC()
     {
         $a = new Parameter('money', 'gt', '100000000');
         $b = new Parameter('time', 'gt', '12:00');
@@ -88,6 +88,46 @@ class NewQueryTest extends TestCase
                 ),
                 array(
                     'and' => array(
+                        array(
+                            'key' => 'time',
+                            'operator' => 'gt',
+                            'value' => '12:00'
+                        ),
+                        array(
+                            'key' => 'time',
+                            'operator' => 'lt',
+                            'value' => '13:00'
+                        )
+                    )
+                )
+            )
+        );
+
+        $this->assertEquals($expectedArray, $query->asArray());
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldCreateANestedExpressionAAndBOrC()
+    {
+        $a = new Parameter('money', 'gt', '100000000');
+        $b = new Parameter('time', 'gt', '12:00');
+        $c = new Parameter('time', 'lt', '13:00');
+
+        $query = NewQuery::build()
+            ->andd($a)
+            ->orr($b, $c);
+
+        $expectedArray = array(#
+            'and' => array(
+                array(
+                    'key' => 'money',
+                    'operator' => 'gt',
+                    'value' => '100000000'
+                ),
+                array(
+                    'or' => array(
                         array(
                             'key' => 'time',
                             'operator' => 'gt',
