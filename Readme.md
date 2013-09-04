@@ -40,11 +40,7 @@ $query = $query->addOr(
     array('name', 'like', '*.de')
 );
 
-$request = \Autodns\Api\Client\Request::build()
-    ->withReplyTo('replyTo@this.com')
-    ->withCtid('some identifier');
-$request
-    ->ofType('DomainListInquiry')
+$task = Autodns\Api\Client\Request\TaskBuilder::build('DomainListInquiry')
     ->withView(array('offset' => 0, 'limit' => 20, 'children' => 0))
     ->withKeys(array('created', 'payable'))
     ->withQuery($query);
@@ -53,7 +49,7 @@ $request
 ### Call
 
 ``` php
-$response = $client->call($request)
+$response = $client->call($task)
 
 $response->isSuccessful(); // -> true
 $response->getStatusCode(); // -> "S12345"
