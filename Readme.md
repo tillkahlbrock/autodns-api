@@ -59,12 +59,11 @@ $response->getStatusType(); // -> "success"
 Todo
 ----
 
-## General issues
-
  * Add some error handling
  * Make selection of tasks less error prone. By now it is: ```TaskBuilder::build('DomainListInquiry')```
 
-## Autodns tasks
+Autodns tasks
+-------------
 
 ### Domain
 
