@@ -119,8 +119,88 @@ class NewQueryTest extends TestCase
             ->andd($a)
             ->orr($b, $c);
 
-        $expectedArray = array(#
+        $expectedArray = array(
             'and' => array(
+                array(
+                    'key' => 'money',
+                    'operator' => 'gt',
+                    'value' => '100000000'
+                ),
+                array(
+                    'or' => array(
+                        array(
+                            'key' => 'time',
+                            'operator' => 'gt',
+                            'value' => '12:00'
+                        ),
+                        array(
+                            'key' => 'time',
+                            'operator' => 'lt',
+                            'value' => '13:00'
+                        )
+                    )
+                )
+            )
+        );
+
+        $this->assertEquals($expectedArray, $query->asArray());
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldCreateANestedExpressionAAndBAndC()
+    {
+        $a = new Parameter('money', 'gt', '100000000');
+        $b = new Parameter('time', 'gt', '12:00');
+        $c = new Parameter('time', 'lt', '13:00');
+
+        $query = NewQuery::build()
+            ->andd($a)
+            ->andd($b, $c);
+
+        $expectedArray = array(
+            'and' => array(
+                array(
+                    'key' => 'money',
+                    'operator' => 'gt',
+                    'value' => '100000000'
+                ),
+                array(
+                    'and' => array(
+                        array(
+                            'key' => 'time',
+                            'operator' => 'gt',
+                            'value' => '12:00'
+                        ),
+                        array(
+                            'key' => 'time',
+                            'operator' => 'lt',
+                            'value' => '13:00'
+                        )
+                    )
+                )
+            )
+        );
+
+        $this->assertEquals($expectedArray, $query->asArray());
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldCreateANestedExpressionAOrBOrC()
+    {
+        $a = new Parameter('money', 'gt', '100000000');
+        $b = new Parameter('time', 'gt', '12:00');
+        $c = new Parameter('time', 'lt', '13:00');
+
+        $query = NewQuery::build()
+            ->orr($a)
+            ->orr($b, $c);
+
+        $expectedArray = array(
+            'or' => array(
                 array(
                     'key' => 'money',
                     'operator' => 'gt',
