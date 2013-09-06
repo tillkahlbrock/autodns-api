@@ -10,7 +10,7 @@ class AndQuery implements QueryInterface
 
     private $right;
 
-    public function __construct(QueryInterface $left, QueryInterface $right)
+    public function __construct(QueryInterface $left, QueryInterface $right = null)
     {
         $this->left = $left;
         $this->right = $right;
@@ -18,11 +18,14 @@ class AndQuery implements QueryInterface
 
     public function asArray()
     {
-        return array(
-            'and' => array(
-                $this->left->asArray(),
-                $this->right->asArray()
-            )
+        $array = array(
+            'and' => array($this->left->asArray())
         );
+
+        if ($this->right) {
+            $array['and'][] = $this->right->asArray();
+        }
+
+        return $array;
     }
 }

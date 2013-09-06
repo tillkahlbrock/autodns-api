@@ -40,7 +40,7 @@ class Query
      * @param array | QueryInterface $right
      * @return QueryInterface
      */
-    public function addAnd($left, $right)
+    public function addAnd($left, $right = null)
     {
         if (is_array($left)) {
             $left = new Parameter($left[0], $left[1], $left[2]);

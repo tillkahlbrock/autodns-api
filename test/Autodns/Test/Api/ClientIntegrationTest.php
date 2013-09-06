@@ -86,6 +86,63 @@ class ClientIntegrationTest extends TestCase
     }
 
     /**
+     * @test
+     */
+    public function itShouldMakeADomainRecoverInquire()
+    {
+        $taskName = 'DomainRecoverInquire';
+
+        $responseXml = $this->getResponseXml($taskName);
+        $expectedRequest = $this->getExpectedRequestXml($taskName);
+
+        $expectedResult = new Client\Response(
+            array(
+                'result' => array(
+                    'data' => array(
+                        'summary' => '1',
+                        'restore' => array(
+                            'name' => 'example.com',
+                            'expire' => '2013-07-13 15:24:39',
+                            'payable' => '2013-07-13 15:24:39',
+                            'action' => 'RESTORE',
+                            'owner' => array(
+                                'user' => 'customer2',
+                                'context' => '4'
+                            ),
+                            'created' => '2009-07-13 15:24:39'
+                        )
+                    ),
+                    'status' => array(
+                        'text' => 'Die wiederherstellbaren Domains wurden erfolgreich ermittelt.',
+                        'type' => 'success',
+                        'code' => 'S0105005'
+                    )
+                ),
+                'stid' => '20130906-xxx-44444'
+            )
+        );
+
+        $fakeResponse = $this->aStub('Buzz\Message\MessageInterface')->with('getContent', $responseXml);
+
+        $sender = $this->aStub('Buzz\Browser')->with('post', $fakeResponse)->build();
+        $sender
+            ->expects($this->once())
+            ->method('post')
+            ->with($this->anything(), $this->anything(), $expectedRequest);
+
+        $client = $this->buildClient($sender);
+
+        $query = Query::build()->addAnd(array('name', 'eq', 'example.com'));
+
+        $task = Request\TaskBuilder::build($taskName)
+            ->withView(array('offset' => 0, 'limit' => 1, 'children' => 0))
+            ->withKeys(array('created', 'payable', 'expire'))
+            ->withQuery($query);
+
+        $this->assertEquals($expectedResult, $client->call($task));
+    }
+
+    /**
      * @param $taskName
      * @return string
      */
