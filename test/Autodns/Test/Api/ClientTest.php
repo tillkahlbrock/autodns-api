@@ -36,7 +36,7 @@ class ClientTest extends TestCase
      */
     public function itShouldSendARequestWithTheGivenTaskAndTheAuthInformation()
     {
-        $task = new Request\Task\DomainListInquiry();
+        $task = new Request\Task\DomainInquireList();
         $authInfo = array('user', 'password', 2);
         $this->accountInfo->with('getAuthInfo', $authInfo);
 

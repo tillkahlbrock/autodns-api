@@ -5,7 +5,7 @@ namespace Autodns\Api\Client\Request\Task;
 
 use Autodns\Api\Client\Request\Task;
 
-class DomainListInquiry implements Task
+class DomainInquireList implements Task
 {
     /**
      * @var string[]

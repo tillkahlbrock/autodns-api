@@ -15,7 +15,7 @@ class Array2XMLTest extends TestCase
      */
     public function itShouldWork()
     {
-        $task = Request\TaskBuilder::build('DomainListInquiry')
+        $task = Request\TaskBuilder::build('DomainInquireList')
             ->withView(array('offset' => 0, 'limit' => 20, 'children' => 0))
             ->withKeys(array('created', 'updated'))
             ->withQuery(

@@ -77,7 +77,7 @@ class ClientIntegrationTest extends TestCase
             array('name', 'like', '*.de')
         );
 
-        $task = Request\TaskBuilder::build('DomainListInquiry')
+        $task = Request\TaskBuilder::build('DomainInquireList')
             ->withView(array('offset' => 0, 'limit' => 20, 'children' => 0))
             ->withKeys(array('created', 'payable'))
             ->withQuery($query);

@@ -40,7 +40,7 @@ $query = $query->addOr(
     array('name', 'like', '*.de')
 );
 
-$task = Autodns\Api\Client\Request\TaskBuilder::build('DomainListInquiry')
+$task = Autodns\Api\Client\Request\TaskBuilder::build('DomainInquireList')
     ->withView(array('offset' => 0, 'limit' => 20, 'children' => 0))
     ->withKeys(array('created', 'payable'))
     ->withQuery($query);
