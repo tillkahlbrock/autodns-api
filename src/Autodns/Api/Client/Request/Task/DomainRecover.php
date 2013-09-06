@@ -28,33 +28,6 @@ class DomainRecover implements Task
     }
 
     /**
-     * @param $view
-     * @return $this
-     */
-    public function withView(array $view)
-    {
-        return $this;
-    }
-
-    /**
-     * @param array $keys
-     * @return $this
-     */
-    public function withKeys(array $keys)
-    {
-        return $this;
-    }
-
-    /**
-     * @param QueryInterface $query
-     * @return $this
-     */
-    public function withQuery(QueryInterface $query)
-    {
-        return $this;
-    }
-
-    /**
      * @param array $values
      * @return Task
      */

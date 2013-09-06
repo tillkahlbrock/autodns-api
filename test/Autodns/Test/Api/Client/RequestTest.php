@@ -12,7 +12,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function itShouldReturnAnArrayRepresentationOfARequest()
     {
-        $query = Query::build();
+        $query = new Query();
         $query = $query->addOr(
             $query->addAnd(
                 array('name', 'like', '*.at'),
@@ -21,8 +21,8 @@ class RequestTest extends \PHPUnit_Framework_TestCase
             array('name', 'like', '*.de')
         );
 
-        $task = Request\TaskBuilder::build('DomainInquireList')
-            ->withView(array('offset' => 0, 'limit' => 20, 'children' => 0))
+        $task = new Request\Task\DomainInquireList();
+        $task->withView(array('offset' => 0, 'limit' => 20, 'children' => 0))
             ->withKeys(array('created', 'payable'))
             ->withQuery($query);
 

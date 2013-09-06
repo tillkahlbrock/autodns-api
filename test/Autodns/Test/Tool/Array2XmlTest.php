@@ -15,12 +15,13 @@ class Array2XMLTest extends TestCase
      */
     public function itShouldWork()
     {
-        $task = Request\TaskBuilder::build('DomainInquireList')
-            ->withView(array('offset' => 0, 'limit' => 20, 'children' => 0))
+        $query = new Query();
+        $task = new Request\Task\DomainInquireList();
+        $task->withView(array('offset' => 0, 'limit' => 20, 'children' => 0))
             ->withKeys(array('created', 'updated'))
             ->withQuery(
-                Query::build()->addOr(
-                    Query::build()->addAnd(
+                $query->addOr(
+                    $query->addAnd(
                         array('name', 'like', '*.at'),
                         array('created', 'lt', '2012-12-*')
                     ),

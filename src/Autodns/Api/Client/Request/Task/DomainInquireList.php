@@ -60,13 +60,4 @@ class DomainInquireList implements Task
         $this->query = $query;
         return $this;
     }
-
-    /**
-     * @param array $values
-     * @return Task
-     */
-    public function withValue(array $values)
-    {
-        return $this;
-    }
 }

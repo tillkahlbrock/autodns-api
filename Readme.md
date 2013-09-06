@@ -18,20 +18,26 @@ Usage
 ### ApiClient
 
 ``` php
-$accountInfo = new Autodns\Api\Account\Info(
+use Autodns\Api\Account\Info;
+use Autodns\Api\Client\Factory;
+
+$accountInfo = new Info(
     'https://api.autodns.com',
     'username',
     'password',
-    $context
+    15
 );
 
-$client = Autodns\Api\Client\Factory::create($accountInfo);
+$client = Factory::create($accountInfo);
 ```
 
 ### Request with Query
 
 ``` php
-$query = Autodns\Api\Client\Request\Task\Query::build();
+use Autodns\Api\Client\Request\Task\Query;
+use Autodns\Api\Client\Request\TaskBuilder\DomainInquireList;
+
+$query = new Query();
 $query = $query->addOr(
     $query->addAnd(
         array('name', 'like', '*.at'),
@@ -40,8 +46,8 @@ $query = $query->addOr(
     array('name', 'like', '*.de')
 );
 
-$task = Autodns\Api\Client\Request\TaskBuilder::build('DomainInquireList')
-    ->withView(array('offset' => 0, 'limit' => 20, 'children' => 0))
+$task = new DomainInquireList();
+$task->withView(array('offset' => 0, 'limit' => 20, 'children' => 0))
     ->withKeys(array('created', 'payable'))
     ->withQuery($query);
 ```
@@ -60,7 +66,7 @@ Todo
 ----
 
  * Add some error handling
- * Make selection of tasks less error prone. By now it is: ```TaskBuilder::build('DomainListInquiry')```
+ * ~~Make selection of tasks less error prone. By now it is: ```TaskBuilder::build('DomainListInquiry')```~~
 
 Autodns tasks
 -------------

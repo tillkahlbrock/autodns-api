@@ -68,7 +68,7 @@ class ClientIntegrationTest extends TestCase
 
         $client = $this->buildClient($sender);
 
-        $query = Query::build();
+        $query = new Query();
         $query = $query->addOr(
             $query->addAnd(
                 array('name', 'like', '*.at'),
@@ -77,8 +77,8 @@ class ClientIntegrationTest extends TestCase
             array('name', 'like', '*.de')
         );
 
-        $task = Request\TaskBuilder::build('DomainInquireList')
-            ->withView(array('offset' => 0, 'limit' => 20, 'children' => 0))
+        $task = new Request\Task\DomainInquireList();
+        $task->withView(array('offset' => 0, 'limit' => 20, 'children' => 0))
             ->withKeys(array('created', 'payable'))
             ->withQuery($query);
 
@@ -132,12 +132,11 @@ class ClientIntegrationTest extends TestCase
 
         $client = $this->buildClient($sender);
 
-        $query = Query::build()->addAnd(array('name', 'eq', 'example.com'));
-
-        $task = Request\TaskBuilder::build($taskName)
-            ->withView(array('offset' => 0, 'limit' => 1, 'children' => 0))
+        $query = new Query();
+        $task = new Request\Task\DomainRecoverInquire();
+        $task->withView(array('offset' => 0, 'limit' => 1, 'children' => 0))
             ->withKeys(array('created', 'payable', 'expire'))
-            ->withQuery($query);
+            ->withQuery($query->addAnd(array('name', 'eq', 'example.com')));
 
         $this->assertEquals($expectedResult, $client->call($task));
     }
@@ -178,14 +177,14 @@ class ClientIntegrationTest extends TestCase
 
         $client = $this->buildClient($sender);
 
-        $task = Request\TaskBuilder::build($taskName)
-            ->withValue(
-                array(
-                    'domain' => 'example.com',
-                    'reply_to' => 'some@body.com',
-                    'ctid' => 'some identifier'
-                )
-            );
+        $task = new Request\Task\DomainRecover();
+        $task->withValue(
+            array(
+                'domain' => 'example.com',
+                'reply_to' => 'some@body.com',
+                'ctid' => 'some identifier'
+            )
+        );
 
         $this->assertEquals($expectedResult, $client->call($task));
     }
