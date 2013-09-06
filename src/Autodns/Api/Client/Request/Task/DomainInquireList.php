@@ -21,14 +21,6 @@ class DomainInquireList implements Task
      */
     private $view;
 
-    public function __construct(array $view = null, array $keys = null, QueryInterface $query = null)
-    {
-        $this->view = $view;
-        $this->keys = $keys;
-        $this->query = $query;
-
-    }
-
     public function asArray()
     {
         return array(
