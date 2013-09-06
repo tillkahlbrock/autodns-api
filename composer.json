@@ -1,4 +1,8 @@
 {
+    "name": "autodns-api/autodns-api",
+    "description": "A full-featured implementation of the AutoDNS-XML-API",
+    "keywords": ["autodns-api", "autodns-client"],
+    "license": "proprietary",
     "require": {
         "kriswallsmith/buzz": "dev-master",
         "schnipseljagd/testdatabuilder": "dev-master"
