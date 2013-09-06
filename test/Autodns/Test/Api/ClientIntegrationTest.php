@@ -88,7 +88,7 @@ class ClientIntegrationTest extends TestCase
     /**
      * @test
      */
-    public function itShouldMakeADomainRecoverInquire()
+    public function itShouldMakeADomainRecoverInquireCall()
     {
         $taskName = 'DomainRecoverInquire';
 
@@ -138,6 +138,54 @@ class ClientIntegrationTest extends TestCase
             ->withView(array('offset' => 0, 'limit' => 1, 'children' => 0))
             ->withKeys(array('created', 'payable', 'expire'))
             ->withQuery($query);
+
+        $this->assertEquals($expectedResult, $client->call($task));
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldMakeADomainRecoverCall()
+    {
+        $taskName = 'DomainRecover';
+
+        $responseXml = $this->getResponseXml($taskName);
+        $expectedRequest = $this->getExpectedRequestXml($taskName);
+
+        $expectedResult = new Client\Response(
+            array(
+                'result' => array(
+                    'data' => array(),
+                    'status' => array(
+                        'code' => 'N0101005',
+                        'type' => 'notify',
+                        'object' => array(
+                            'type' => 'domain',
+                            'value' => 'example.com'
+                        )
+                    )
+                )
+            )
+        );
+
+        $fakeResponse = $this->aStub('Buzz\Message\MessageInterface')->with('getContent', $responseXml);
+
+        $sender = $this->aStub('Buzz\Browser')->with('post', $fakeResponse)->build();
+        $sender
+            ->expects($this->once())
+            ->method('post')
+            ->with($this->anything(), $this->anything(), $expectedRequest);
+
+        $client = $this->buildClient($sender);
+
+        $task = Request\TaskBuilder::build($taskName)
+            ->withValue(
+                array(
+                    'domain' => 'example.com',
+                    'reply_to' => 'some@body.com',
+                    'ctid' => 'some identifier'
+                )
+            );
 
         $this->assertEquals($expectedResult, $client->call($task));
     }

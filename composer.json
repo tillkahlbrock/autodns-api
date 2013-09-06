@@ -4,10 +4,10 @@
     "keywords": ["autodns-api", "autodns-client"],
     "license": "proprietary",
     "require": {
-        "kriswallsmith/buzz": "dev-master",
-        "schnipseljagd/testdatabuilder": "dev-master"
+        "kriswallsmith/buzz": "dev-master"
     },
     "require-dev": {
+        "schnipseljagd/testdatabuilder": "dev-master",
         "phpunit/phpunit": "3.7.*"
     },
     "autoload": {

@@ -5,32 +5,23 @@ namespace Autodns\Api\Client\Request\Task;
 
 use Autodns\Api\Client\Request\Task;
 
-class DomainRecoverInquire implements Task
+class DomainRecover implements Task
 {
-    /**
-     * @var string[]
-     */
-    private $keys;
-    /**
-     * @var QueryInterface
-     */
-    private $query;
-
-    /**
-     * @var string[]
-     */
-    private $view;
+    private $values;
 
     public function asArray()
     {
         $array = array(
-            'code' => '0105005',
-            'view' => $this->view,
-            'key' => $this->keys
+            'code' => '0101005',
+            'domain' => array('name' => $this->values['domain'])
         );
 
-        if ($this->query) {
-            $array['where'] = $this->query->asArray();
+        if (isset($this->values['ctid'])) {
+            $array['ctid'] = $this->values['ctid'];
+        }
+
+        if (isset($this->values['reply_to'])) {
+            $array['reply_to'] = $this->values['reply_to'];
         }
 
         return $array;
@@ -42,7 +33,6 @@ class DomainRecoverInquire implements Task
      */
     public function withView(array $view)
     {
-        $this->view = $view;
         return $this;
     }
 
@@ -52,7 +42,6 @@ class DomainRecoverInquire implements Task
      */
     public function withKeys(array $keys)
     {
-        $this->keys = $keys;
         return $this;
     }
 
@@ -62,7 +51,6 @@ class DomainRecoverInquire implements Task
      */
     public function withQuery(QueryInterface $query)
     {
-        $this->query = $query;
         return $this;
     }
 
@@ -72,6 +60,7 @@ class DomainRecoverInquire implements Task
      */
     public function withValue(array $values)
     {
+        $this->values = $values;
         return $this;
     }
 }

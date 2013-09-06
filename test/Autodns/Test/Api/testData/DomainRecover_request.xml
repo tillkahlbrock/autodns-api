@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<request>
+  <auth>
+    <user>user</user>
+    <password>password</password>
+    <context>4</context>
+  </auth>
+  <task>
+    <code>0101005</code>
+    <domain>
+      <name>example.com</name>
+    </domain>
+    <ctid>some identifier</ctid>
+    <reply_to>some@body.com</reply_to>
+  </task>
+</request>

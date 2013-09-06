@@ -47,16 +47,6 @@ class Request
         return $this;
     }
 
-    /**
-     * @param $ctid
-     * @return $this
-     */
-    public function withCtid($ctid)
-    {
-        $this->ctid = $ctid;
-        return $this;
-    }
-
     public function getTask()
     {
         return $this->task;

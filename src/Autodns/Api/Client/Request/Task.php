@@ -29,4 +29,10 @@ interface Task
      * @return Task
      */
     public function withQuery(QueryInterface $query);
+
+    /**
+     * @param array $values
+     * @return Task
+     */
+    public function withValue(array $values);
 }

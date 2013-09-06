@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<response>
+    <result>
+        <data />
+        <status>
+            <code>N0101005</code>
+            <type>notify</type>
+            <object>
+                <type>domain</type>
+                <value>example.com</value>
+            </object>
+        </status>
+    </result>
+</response>
