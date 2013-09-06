@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<response>
+    <result>
+        <data>
+            <summary>2</summary>
+            <domain>
+                <owner>
+                    <user>customer</user>
+                    <context>4</context>
+                </owner>
+                <name>example.com</name>
+                <created>2005-06-16 16:47:50</created>
+            </domain>
+            <domain>
+                <owner>
+                    <user>customer2</user>
+                    <context>4</context>
+                </owner>
+                <name>example.com</name>
+                <created>2005-06-16 16:47:50</created>
+                <domainsafe>true</domainsafe>
+                <dnssec>false</dnssec>
+            </domain>
+        </data>
+        <status>
+            <text>Domaindaten wurden erfolgreich ermittelt.</text>
+            <type>success</type>
+            <code>S0105</code>
+        </status>
+    </result>
+</response>
