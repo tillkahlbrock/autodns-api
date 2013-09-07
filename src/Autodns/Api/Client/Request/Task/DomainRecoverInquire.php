@@ -23,11 +23,16 @@ class DomainRecoverInquire implements Task
 
     public function asArray()
     {
-        $array = array(
-            'code' => '0105005',
-            'view' => $this->view,
-            'key' => $this->keys
-        );
+        $array = array('code' => '0105005');
+
+        if ($this->view) {
+            $array['view'] = $this->view;
+        }
+
+        if ($this->keys) {
+            $array['key'] = $this->keys;
+        }
+
 
         if ($this->query) {
             $array['where'] = $this->query->asArray();

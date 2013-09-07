@@ -23,12 +23,22 @@ class DomainInquireList implements Task
 
     public function asArray()
     {
-        return array(
-            'code' => '0105',
-            'view' => $this->view,
-            'key' => $this->keys,
-            'where' => $this->query->asArray()
-        );
+        $array = array('code' => '0105');
+
+        if ($this->view) {
+            $array['view'] = $this->view;
+        }
+
+        if ($this->keys) {
+            $array['key'] = $this->keys;
+        }
+
+
+        if ($this->query) {
+            $array['where'] = $this->query->asArray();
+        }
+
+        return $array;
     }
 
     /**
