@@ -7,33 +7,55 @@ use Autodns\Api\Client\Request\Task;
 
 class DomainRecover implements Task
 {
-    private $values;
+    private $domain;
+    private $ctid;
+    private $replyTo;
 
     public function asArray()
     {
         $array = array(
             'code' => '0101005',
-            'domain' => array('name' => $this->values['domain'])
+            'domain' => array('name' => $this->domain)
         );
 
-        if (isset($this->values['ctid'])) {
-            $array['ctid'] = $this->values['ctid'];
+        if (isset($this->ctid)) {
+            $array['ctid'] = $this->ctid;
         }
 
-        if (isset($this->values['reply_to'])) {
-            $array['reply_to'] = $this->values['reply_to'];
+        if (isset($this->replyTo)) {
+            $array['reply_to'] = $this->replyTo;
         }
 
         return $array;
     }
 
     /**
-     * @param array $values
-     * @return Task
+     * @param $domain
+     * @return $this
      */
-    public function withValue(array $values)
+    public function domain($domain)
     {
-        $this->values = $values;
+        $this->domain = $domain;
+        return $this;
+    }
+
+    /**
+     * @param $ctid
+     * @return $this
+     */
+    public function withCtid($ctid)
+    {
+        $this->ctid = $ctid;
+        return $this;
+    }
+
+    /**
+     * @param $replyTo
+     * @return $this
+     */
+    public function replyTo($replyTo)
+    {
+        $this->replyTo = $replyTo;
         return $this;
     }
 }

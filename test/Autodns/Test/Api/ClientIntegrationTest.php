@@ -178,13 +178,10 @@ class ClientIntegrationTest extends TestCase
         $client = $this->buildClient($sender);
 
         $task = new Request\Task\DomainRecover();
-        $task->withValue(
-            array(
-                'domain' => 'example.com',
-                'reply_to' => 'some@body.com',
-                'ctid' => 'some identifier'
-            )
-        );
+        $task
+            ->domain('example.com')
+            ->withCtid('some identifier')
+            ->replyTo('some@body.com');
 
         $this->assertEquals($expectedResult, $client->call($task));
     }
