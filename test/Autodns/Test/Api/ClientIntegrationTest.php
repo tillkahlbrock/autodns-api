@@ -226,6 +226,66 @@ class ClientIntegrationTest extends TestCase
     }
 
     /**
+     * @test
+     */
+    public function itShouldMakeAHandleInquireCall()
+    {
+        $taskName = 'HandleInquire';
+
+        $responseXml = $this->getResponseXml($taskName);
+        $expectedRequest = $this->getExpectedRequestXml($taskName);
+
+        $expectedResult = new Client\Response(
+            array(
+                'result' => array(
+                    'data' => array(
+                        'handle' => array(
+                            'address' => 'Street',
+                            'alias' => 'Somebody Who',
+                            'city' => 'City',
+                            'country' => 'UK',
+                            'created' => '2009-11-11 11:43:35',
+                            'domainsafe' => '0',
+                            'email' => 'some@one.com',
+                            'fname' => 'Somebody',
+                            'id' => '1254545',
+                            'lname' => 'Who',
+                            'nic_ref' => array(
+                                'name' => 'Some ref',
+                                'nic' => 'uk',
+                                'status' => 'success'
+                            ),
+                            'owner' => array(
+                                'context' => '45',
+                                'user' => 'customer',
+                            ),
+                            'pcode' => '12345',
+                            'phone' => '12334545454',
+                            'protection' => 'B',
+                            'state' => 'UK',
+                            'type' => 'PERSON'
+                        )
+                    ),
+                    'status' => array(
+                        'code' => 'S0304',
+                        'text' => 'Domainkontakt-Daten wurden erfolgreich ermittelt.',
+                        'type' => 'success'
+                    )
+                )
+            )
+        );
+
+        $client = $this->buildClientAndExpectRequestToBeSended($responseXml, $expectedRequest);
+
+        $task = new Request\Task\HandleInquire();
+        $task
+            ->handleId('1254545')
+            ->alias('Somebody Who');
+
+        $this->assertEquals($expectedResult, $client->call($task));
+    }
+
+    /**
      * @param $taskName
      * @return string
      */

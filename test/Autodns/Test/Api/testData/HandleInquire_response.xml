@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<response>
+    <result>
+        <data>
+            <handle>
+                <address>Street</address>
+                <alias>Somebody Who</alias>
+                <city>City</city>
+                <country>UK</country>
+                <created>2009-11-11 11:43:35</created>
+                <domainsafe>0</domainsafe>
+                <email>some@one.com</email>
+                <fname>Somebody</fname>
+                <id>1254545</id>
+                <lname>Who</lname>
+                <nic_ref>
+                    <name>Some ref</name>
+                    <nic>uk</nic>
+                    <status>success</status>
+                </nic_ref>
+                <owner>
+                    <context>45</context>
+                    <user>customer</user>
+                </owner>
+                <pcode>12345</pcode>
+                <phone>12334545454</phone>
+                <protection>B</protection>
+                <state>UK</state>
+                <type>PERSON</type>
+            </handle>
+        </data>
+        <status>
+            <code>S0304</code>
+            <text>Domainkontakt-Daten wurden erfolgreich ermittelt.</text>
+            <type>success</type>
+        </status>
+    </result>
+</response>

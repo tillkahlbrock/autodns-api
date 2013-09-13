@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<request>
+  <auth>
+    <user>user</user>
+    <password>password</password>
+    <context>4</context>
+  </auth>
+  <task>
+    <code>0304</code>
+    <handle>
+      <id>1254545</id>
+      <alias>Somebody Who</alias>
+    </handle>
+  </task>
+</request>
