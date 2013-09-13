@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<response>
+    <result>
+        <data>
+            <domain>
+                <adminc>1224545</adminc>
+                <authinfo></authinfo>
+                <autorenew>true</autorenew>
+                <created>2009-11-11 11:44:33</created>
+                <name>example.com</name>
+                <nserver>
+                    <name>ns1.example.com</name>
+                </nserver>
+                <nserver>
+                    <name>ns2.example.com</name>
+                </nserver>
+                <owner>
+                    <context>54</context>
+                    <user>username222</user>
+                </owner>
+                <ownerc>44554</ownerc>
+                <payable>2012-11-11 11:44:33</payable>
+                <period>1</period>
+                <status>success</status>
+                <techc>445545</techc>
+                <zonec>445545</zonec>
+            </domain>
+        </data>
+        <status>
+            <code>S0105</code>
+            <text>Domaindaten wurden erfolgreich ermittelt.</text>
+            <type>success</type>
+        </status>
+    </result>
+</response>

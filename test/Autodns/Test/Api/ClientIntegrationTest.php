@@ -122,15 +122,7 @@ class ClientIntegrationTest extends TestCase
             )
         );
 
-        $fakeResponse = $this->aStub('Buzz\Message\MessageInterface')->with('getContent', $responseXml);
-
-        $sender = $this->aStub('Buzz\Browser')->with('post', $fakeResponse)->build();
-        $sender
-            ->expects($this->once())
-            ->method('post')
-            ->with($this->anything(), $this->anything(), $expectedRequest);
-
-        $client = $this->buildClient($sender);
+        $client = $this->buildClientAndExpectRequestToBeSended($responseXml, $expectedRequest);
 
         $query = new Query();
         $task = new Request\Task\DomainRecoverInquire();
@@ -167,21 +159,68 @@ class ClientIntegrationTest extends TestCase
             )
         );
 
-        $fakeResponse = $this->aStub('Buzz\Message\MessageInterface')->with('getContent', $responseXml);
-
-        $sender = $this->aStub('Buzz\Browser')->with('post', $fakeResponse)->build();
-        $sender
-            ->expects($this->once())
-            ->method('post')
-            ->with($this->anything(), $this->anything(), $expectedRequest);
-
-        $client = $this->buildClient($sender);
+        $client = $this->buildClientAndExpectRequestToBeSended($responseXml, $expectedRequest);
 
         $task = new Request\Task\DomainRecover();
         $task
             ->domain('example.com')
             ->withCtid('some identifier')
             ->replyTo('some@body.com');
+
+        $this->assertEquals($expectedResult, $client->call($task));
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldMakeADomainInquireCall()
+    {
+        $taskName = 'DomainInquire';
+
+        $responseXml = $this->getResponseXml($taskName);
+        $expectedRequest = $this->getExpectedRequestXml($taskName);
+
+        $expectedResult = new Client\Response(
+            array(
+                'result' => array(
+                    'data' => array(
+                        'domain' => array(
+                            'adminc' => '1224545',
+                            'authinfo' => array(),
+                            'autorenew' => 'true',
+                            'name' => 'example.com',
+                            'nserver' => array(
+                                array('name' => 'ns1.example.com'),
+                                array('name' => 'ns2.example.com'),
+                            ),
+                            'owner' => array(
+                                'context' => '54',
+                                'user' => 'username222',
+                            ),
+                            'ownerc' => '44554',
+                            'payable' => '2012-11-11 11:44:33',
+                            'period' => '1',
+                            'status' => 'success',
+                            'techc' => '445545',
+                            'zonec' => '445545',
+                            'created' => '2009-11-11 11:44:33'
+                        )
+                    ),
+                    'status' => array(
+                        'code' => 'S0105',
+                        'text' => 'Domaindaten wurden erfolgreich ermittelt.',
+                        'type' => 'success'
+                    )
+                )
+            )
+        );
+
+        $client = $this->buildClientAndExpectRequestToBeSended($responseXml, $expectedRequest);
+
+        $task = new Request\Task\DomainInquire();
+        $task
+            ->domain('example.com')
+            ->withKeys(array('created', 'payable'));
 
         $this->assertEquals($expectedResult, $client->call($task));
     }
@@ -218,6 +257,25 @@ class ClientIntegrationTest extends TestCase
             ),
             new Info(self::SOME_URL, 'user', 'password', 4)
         );
+        return $client;
+    }
+
+    /**
+     * @param $responseXml
+     * @param $expectedRequest
+     * @return Client
+     */
+    private function buildClientAndExpectRequestToBeSended($responseXml, $expectedRequest)
+    {
+        $fakeResponse = $this->aStub('Buzz\Message\MessageInterface')->with('getContent', $responseXml);
+
+        $sender = $this->aStub('Buzz\Browser')->with('post', $fakeResponse)->build();
+        $sender
+            ->expects($this->once())
+            ->method('post')
+            ->with($this->anything(), $this->anything(), $expectedRequest);
+
+        $client = $this->buildClient($sender);
         return $client;
     }
 }

@@ -23,6 +23,12 @@ class XmlToArrayConverterTest extends TestCase
     <task>
         <code>0101003</code>
         <domain>
+            <nserver>
+                <name>ns1.example.com</name>
+            </nserver>
+            <nserver>
+                <name>ns2.example.com</name>
+            </nserver>
             <name>some-domain.com</name>
             <payable>2012-01-15</payable>
             <period>1</period>
@@ -39,11 +45,15 @@ XML;
                 'context' => 2
             ),
             'task' => array(
-                'code'   => '0101003',
+                'code' => '0101003',
                 'domain' => array(
-                    'name'                => 'some-domain.com',
-                    'payable'             => '2012-01-15',
-                    'period'              => 1,
+                    'nserver' => array(
+                        array('name' => 'ns1.example.com'),
+                        array('name' => 'ns2.example.com'),
+                    ),
+                    'name' => 'some-domain.com',
+                    'payable' => '2012-01-15',
+                    'period' => '1',
                     'remove_cancellation' => 'no'
                 )
             )

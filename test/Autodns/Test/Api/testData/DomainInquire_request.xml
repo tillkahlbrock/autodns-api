@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<request>
+  <auth>
+    <user>user</user>
+    <password>password</password>
+    <context>4</context>
+  </auth>
+  <task>
+    <code>0105</code>
+    <domain>
+      <name>example.com</name>
+    </domain>
+    <key>created</key>
+    <key>payable</key>
+  </task>
+</request>
