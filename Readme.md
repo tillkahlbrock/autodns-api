@@ -8,7 +8,6 @@ A full-featured implementation of the [AutoDNS-XML-API](http://www.internetx.com
 Usage
 -----
 
-### ApiClient
 
 ``` php
 use Autodns\Api\Account\Info;
