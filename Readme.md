@@ -5,13 +5,6 @@ A full-featured implementation of the [AutoDNS-XML-API](http://www.internetx.com
 
 [![Build Status](https://secure.travis-ci.org/tillkahlbrock/autodns-api.png?branch=master)](http://travis-ci.org/tillkahlbrock/autodns-api)
 
-Design goals
-------------
-
- * No need to build / parse XML for the user
- * Easy request building even for complex queries
- * Consistent and simple interface
-
 Usage
 -----
 
